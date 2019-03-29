@@ -1,4 +1,4 @@
-package interpreter.expressionSolver.logic;
+package interpreter.expressionSolver.logic.comparisonExpressions;
 
 import interpreter.expressionSolver.math.MathExpression;
 

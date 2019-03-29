@@ -7,8 +7,19 @@ import interpreter.symboles.RegularSymbol;
 import interpreter.symboles.Symbol;
 import interpreter.symboles.SymbolTable;
 import interpreter.symboles.SymbolTable.SymbolException;
-
+/**
+ * Every Var Command represents a link to a parameter in the aircraft.<br>
+ * TODO ...
+ * @param String SymbolName
+ * @param SymbolFactory
+ * @author Arik Regev
+ */
 public class VarCommand implements Command {
+	/**
+	 * Symbol Factory is a static interface for the purpose of creating new symbols<br>
+	 * using Lambda Expressions and inserting the newly created symbol into the Symbol Table.
+	 * @author Arik Regev
+	 */
 	private static interface SymbolFactory{
 		public Symbol createSymbol(SymbolTable symTable);
 	}

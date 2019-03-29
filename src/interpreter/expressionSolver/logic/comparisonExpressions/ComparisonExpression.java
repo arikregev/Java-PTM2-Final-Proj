@@ -1,5 +1,6 @@
-package interpreter.expressionSolver.logic;
+package interpreter.expressionSolver.logic.comparisonExpressions;
 
+import interpreter.expressionSolver.logic.BooleanExpression;
 import interpreter.expressionSolver.math.MathExpression;
 
 public abstract class ComparisonExpression implements BooleanExpression {

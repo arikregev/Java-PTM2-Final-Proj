@@ -9,6 +9,8 @@ import interpreter.symboles.SymbolTable.SymbolException;
  * The Command was created in the purpose of 
  * having the ability to assign values to our variables in
  * our newly invented Language.
+ * @param String varName.
+ * @param MathExpression varValue.
  * @author Arik Regev
  */
 public class AssignCommand implements Command {

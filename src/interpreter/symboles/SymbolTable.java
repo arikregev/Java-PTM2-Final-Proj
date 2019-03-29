@@ -1,7 +1,14 @@
 package interpreter.symboles;
 
 import java.util.HashMap;
-
+/**
+ * Symbol table store symbols declared by the instructions sent into the software.<br>
+ * The symbol table is the "bridge" between the software and the flight simulator.<br>
+ * All declared variables will create Symbols that will be stored inside the HashMap for easy and fast Access.  
+ * @param HashMap <String,Symbol> symTable.
+ * @author Arik Regev
+ *
+ */
 public class SymbolTable {
 	@SuppressWarnings("serial")
 	public static class SymbolException extends Exception {

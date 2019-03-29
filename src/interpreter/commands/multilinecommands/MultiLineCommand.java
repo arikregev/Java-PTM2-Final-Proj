@@ -6,7 +6,7 @@ import interpreter.commands.Command;
 /**
  * The Abstract Command Class is being inherited by two  
  * Commands that can hold single commands in them:<br>
- * 	1 - LoopCommand<br>
+ * 	1 - WhileCommand<br>
  *  2 - IfCommand<br>
  *  All over commands are single commands which can be held and executed
  *  by the MultiLine Commands.

@@ -1,4 +1,4 @@
-package interpreter.expressionSolver.logic;
+package interpreter.expressionSolver.logic.comparisonExpressions;
 
 import interpreter.expressionSolver.math.MathExpression;
 
@@ -10,7 +10,7 @@ public class BiggerThenExpression extends ComparisonExpression {
 
 	@Override
 	public boolean calculateLogic() {
-		return left.calculateNumber() > right.calculateNumber();
+		return left.calculateNumber() > right.calculateNumber(); //Returns True or False for an Bigger Then Expression
 		
 	}
 

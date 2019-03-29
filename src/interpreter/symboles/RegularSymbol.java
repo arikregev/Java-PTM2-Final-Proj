@@ -1,5 +1,11 @@
 package interpreter.symboles;
-
+/**
+ * Regular Symbol represents variables that are numeric based like int, double. 
+ * <br>
+ * @param Double
+ * @author Arik Regev
+ *
+ */
 public class RegularSymbol implements Symbol {
 
 	private double value;

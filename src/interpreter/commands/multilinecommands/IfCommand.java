@@ -7,7 +7,7 @@ import interpreter.symboles.SymbolTable.SymbolException;
 /**
  * Defining how our IF Command will behave 
  * 
- * @author Arik
+ * @author Arik Regev
  *
  */
 public class IfCommand extends MultiLineCommand {
