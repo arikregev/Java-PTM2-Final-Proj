@@ -7,7 +7,6 @@ import interpreter.symboles.SymbolTable.SymbolException;
  * that will be able to use in our newly invented Language.
 
  * @author Arik Regev
- * @author Amit Koren
  */
 public interface Command {
 	@SuppressWarnings("serial")

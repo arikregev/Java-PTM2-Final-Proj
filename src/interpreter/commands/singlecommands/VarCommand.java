@@ -1,15 +1,35 @@
 package interpreter.commands.singlecommands;
 
 import interpreter.commands.Command;
+import interpreter.expressionSolver.math.MathExpression;
+import interpreter.symboles.BindSymbol;
+import interpreter.symboles.RegularSymbol;
+import interpreter.symboles.Symbol;
 import interpreter.symboles.SymbolTable;
 import interpreter.symboles.SymbolTable.SymbolException;
 
 public class VarCommand implements Command {
+	private static interface SymbolFactory{
+		public Symbol createSymbol(SymbolTable symTable);
+	}
+	
+	public String symName;
+	public SymbolFactory s;
+	
+	public VarCommand(String symName, MathExpression exp) {
+		this.symName = symName;
+		this.s = (symTable)->{return new RegularSymbol(exp.calculateNumber());};
+	}
+		
+	public VarCommand(String symName, String path) {
+		this.symName = symName;
+		this.s = (symTable)->{return new BindSymbol(path, symTable);};
+		
+	}
 
 	@Override
 	public void doCommand(SymbolTable symTable) throws SymbolException {
-		// TODO Auto-generated method stub
-
+		symTable.addSymbol(symName, s.createSymbol(symTable));
 	}
 
 }

@@ -8,7 +8,7 @@ import interpreter.symboles.SymbolTable.SymbolException;
  * The Command was created in the purpose of 
  * having the ability to connect to the FlightGear Server
  * @author Arik Regev
- * @author Amit Koren
+ * 
  */
 public class ConnectCommand implements Command {
 	private String varName;

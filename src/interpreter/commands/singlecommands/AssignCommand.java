@@ -1,6 +1,7 @@
 package interpreter.commands.singlecommands;
 
 import interpreter.commands.Command;
+import interpreter.expressionSolver.math.MathExpression;
 import interpreter.symboles.Symbol;
 import interpreter.symboles.SymbolTable;
 import interpreter.symboles.SymbolTable.SymbolException;
@@ -9,22 +10,20 @@ import interpreter.symboles.SymbolTable.SymbolException;
  * having the ability to assign values to our variables in
  * our newly invented Language.
  * @author Arik Regev
- * @author Amit Koren
  */
 public class AssignCommand implements Command {
 	private String varName;
-	private String[] parameters;
+	private MathExpression varValue; //Can be an Expression or just a Number;
 	
-	public AssignCommand(String varName, String[] parms) {
+	public AssignCommand(String varName, MathExpression varValue) {
 		this.varName = varName;
-		this.parameters = parms;
+		this.varValue = varValue;
 	}
 	
 	@Override
 	public void doCommand(SymbolTable symTable) throws SymbolException {
 		Symbol sym = symTable.getSymbol(this.varName);
-		// TODO: complete after solve Expression.
-
+		sym.setValue(varValue.calculateNumber());
 	}
 
 }

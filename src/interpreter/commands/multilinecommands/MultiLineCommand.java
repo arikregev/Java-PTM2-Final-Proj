@@ -11,7 +11,7 @@ import interpreter.commands.Command;
  *  All over commands are single commands which can be held and executed
  *  by the MultiLine Commands.
  * @author Arik Regev
- * @author Amit Koren
+ * 
  */
 public abstract class MultiLineCommand implements Command{
 
