@@ -5,6 +5,8 @@ public class OrExpression extends LogicExpression {
 	 * Class to resolve an answer to the OR Expression in out new Language
 	 * @param left
 	 * @param right
+	 * @author Arik Regev
+	 * @author Amit Koren
 	 */
 	public OrExpression(LogicExpression left, LogicExpression right) {
 		super(left, right);

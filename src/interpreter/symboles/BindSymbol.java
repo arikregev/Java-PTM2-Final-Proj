@@ -6,7 +6,7 @@ package interpreter.symboles;
  * @param String Path Name
  * @param SymbolTable symTable
  * @author Arik Regev
- *
+ * @author Amit Koren
  */
 public class BindSymbol implements Symbol {
 	private String path;

@@ -10,6 +10,8 @@ import java.util.regex.Pattern;
 
 import interpreter.commands.*;
 import interpreter.commands.multilinecommands.MultiLineCommand;
+import interpreter.commands.servercommands.ConnectCommand;
+import interpreter.commands.servercommands.OpenDataServerCommand;
 import interpreter.symboles.SymbolTable;
 import interpreter.symboles.SymbolTable.SymbolException;
 
@@ -24,6 +26,9 @@ public abstract class Interpreter {
 		commandMap = new HashMap<>();
 		mlc = null;
 		symTable = new SymbolTable();
+		//**************************
+		
+		
 	}
 	
 	public abstract String getLine() throws EOFException;

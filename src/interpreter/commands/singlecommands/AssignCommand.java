@@ -12,6 +12,7 @@ import interpreter.symboles.SymbolTable.SymbolException;
  * @param String varName.
  * @param MathExpression varValue.
  * @author Arik Regev
+ * @author Amit Koren
  */
 public class AssignCommand implements Command {
 	private String varName;

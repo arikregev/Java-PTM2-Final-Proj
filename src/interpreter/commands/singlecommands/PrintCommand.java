@@ -7,7 +7,7 @@ import interpreter.symboles.SymbolTable.SymbolException;
 /**
  * The Print command allows you to print to the screen Strings and MathExpressions.
  * @author Arik Regev
- *
+ * @author Amit Koren
  */
 public class PrintCommand implements Command {
 	/**

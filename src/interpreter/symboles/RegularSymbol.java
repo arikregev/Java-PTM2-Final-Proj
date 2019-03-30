@@ -4,7 +4,7 @@ package interpreter.symboles;
  * <br>
  * @param Double
  * @author Arik Regev
- *
+ * @author Amit Koren
  */
 public class RegularSymbol implements Symbol {
 

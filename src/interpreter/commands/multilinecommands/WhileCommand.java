@@ -9,7 +9,7 @@ import interpreter.symboles.SymbolTable.SymbolException;
  * Defining how our LOOP Command will behave 
  * 
  * @author Arik
- *
+ * @author Amit Koren
  */
 public class WhileCommand extends MultiLineCommand {
 	private BooleanExpression exp;

@@ -13,6 +13,7 @@ import interpreter.symboles.SymbolTable.SymbolException;
  * @param String SymbolName
  * @param SymbolFactory
  * @author Arik Regev
+ * @author Amit Koren
  */
 public class VarCommand implements Command {
 	/**

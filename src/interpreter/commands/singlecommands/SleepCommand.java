@@ -10,7 +10,7 @@ import interpreter.symboles.SymbolTable.SymbolException;
  * The command receives the value in Milliseconds. 
  * @param Long parameter (Milliseconds). 
  * @author Arik Regev
- *
+ * @author Amit Koren
  */
 public class SleepCommand implements Command {
 	private long parameter;

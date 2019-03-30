@@ -4,6 +4,8 @@ package interpreter.expressionSolver.logic;
  * The purpose of this class to resolve an answer to the AND Expression in out new Language
  * @param left
  * @param right
+ * @author Arik Regev
+ * @author Amit Koren
  */
 public class AndExpression extends LogicExpression {
 

@@ -7,7 +7,7 @@ import java.util.HashMap;
  * All declared variables will create Symbols that will be stored inside the HashMap for easy and fast Access.  
  * @param HashMap <String,Symbol> symTable.
  * @author Arik Regev
- *
+ * @author Amit Koren
  */
 public class SymbolTable {
 	@SuppressWarnings("serial")
