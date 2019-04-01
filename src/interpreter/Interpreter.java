@@ -1,7 +1,7 @@
 package interpreter;
 
 import java.io.EOFException;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,8 +10,6 @@ import java.util.regex.Pattern;
 
 import interpreter.commands.*;
 import interpreter.commands.multilinecommands.MultiLineCommand;
-import interpreter.commands.servercommands.ConnectCommand;
-import interpreter.commands.servercommands.OpenDataServerCommand;
 import interpreter.symboles.SymbolTable;
 import interpreter.symboles.SymbolTable.SymbolException;
 
@@ -54,7 +52,7 @@ public abstract class Interpreter {
 	}
 	
 	// breaks a line into separate tokens
-	private List<String> lexer(String line){
+	public List<String> lexer(String line){
 		Pattern r = Pattern.compile(lexerRegex);
 		List<String> tokens = new LinkedList<String>();
 		Matcher m = r.matcher(line);
