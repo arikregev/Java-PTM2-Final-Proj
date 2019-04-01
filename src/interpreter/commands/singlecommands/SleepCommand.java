@@ -1,8 +1,11 @@
 package interpreter.commands.singlecommands;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import interpreter.Interpreter.ParseException;
 import interpreter.commands.Command;
+import interpreter.commands.factory.CommandFactory;
 import interpreter.symboles.SymbolTable;
 import interpreter.symboles.SymbolTable.SymbolException;
 /**
@@ -26,6 +29,14 @@ public class SleepCommand implements Command {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	public static class Factory implements CommandFactory{
+		@Override
+		public Command create(List<String> tokens) throws ParseException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
 	}
 
 }

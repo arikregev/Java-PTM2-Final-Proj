@@ -1,6 +1,10 @@
 package interpreter.commands.servercommands;
 
+import java.util.List;
+
+import interpreter.Interpreter.ParseException;
 import interpreter.commands.Command;
+import interpreter.commands.factory.CommandFactory;
 import interpreter.symboles.SymbolTable;
 import interpreter.symboles.SymbolTable.SymbolException;
 
@@ -15,6 +19,14 @@ public class OpenDataServerCommand implements Command {
 	public void doCommand(SymbolTable symTable) throws SymbolException {
 		// TODO Auto-generated method stub
 
+	}
+	public static class Factory implements CommandFactory{
+		@Override
+		public Command create(List<String> tokens) throws ParseException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
 	}
 
 }

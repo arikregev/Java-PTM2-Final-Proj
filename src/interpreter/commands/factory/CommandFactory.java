@@ -1,10 +1,10 @@
 package interpreter.commands.factory;
 
+import java.util.List;
+
+import interpreter.Interpreter.ParseException;
 import interpreter.commands.Command;
 
-public class CommandFactory {
-	private interface CommandCreator{
-		public Command create();
-	}
-
+public interface CommandFactory {
+	public Command create(List<String> tokens) throws ParseException;
 }

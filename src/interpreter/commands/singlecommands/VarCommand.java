@@ -1,7 +1,11 @@
 package interpreter.commands.singlecommands;
 
+import java.util.List;
+
+import interpreter.Interpreter.ParseException;
 import interpreter.commands.Command;
-import interpreter.expressionSolver.math.MathExpression;
+import interpreter.commands.factory.CommandFactory;
+import interpreter.expression.math.MathExpression;
 import interpreter.symboles.BindSymbol;
 import interpreter.symboles.RegularSymbol;
 import interpreter.symboles.Symbol;
@@ -42,6 +46,14 @@ public class VarCommand implements Command {
 	@Override
 	public void doCommand(SymbolTable symTable) throws SymbolException {
 		symTable.addSymbol(symName, s.createSymbol(symTable));
+	}
+	public static class Factory implements CommandFactory{
+		@Override
+		public Command create(List<String> tokens) throws ParseException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
 	}
 
 }

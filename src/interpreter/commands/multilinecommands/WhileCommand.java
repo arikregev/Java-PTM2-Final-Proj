@@ -1,17 +1,21 @@
 package interpreter.commands.multilinecommands;
 
+import java.util.List;
+
+import interpreter.Interpreter.ParseException;
 import interpreter.commands.Command;
-import interpreter.expressionSolver.logic.BooleanExpression;
+import interpreter.commands.factory.CommandFactory;
+import interpreter.expression.logic.BooleanExpression;
 import interpreter.symboles.SymbolTable;
 import interpreter.symboles.SymbolTable.SymbolException;
 
 /**
  * Defining how our LOOP Command will behave 
  * 
- * @author Arik
- * @author Amit Koren
+ * @author Arik Regev
+ * 
  */
-public class WhileCommand extends MultiLineCommand {
+public class WhileCommand extends ControlCommand{
 	private BooleanExpression exp;
 	
 	public WhileCommand(BooleanExpression exp) {
@@ -20,9 +24,16 @@ public class WhileCommand extends MultiLineCommand {
 	@Override
 	public void doCommand(SymbolTable symTable) throws SymbolException {
 		while(exp.calculateLogic()) {
-			for(Command c : this.subCommands) 
-				c.doCommand(symTable);
+			innerCommand.doCommand(symTable);
 		}
+	}
+	public static class Factory implements CommandFactory{
+		@Override
+		public Command create(List<String> tokens) throws ParseException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
 	}
 
 }
