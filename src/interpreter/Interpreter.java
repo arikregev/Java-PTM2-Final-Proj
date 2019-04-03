@@ -19,7 +19,11 @@ import interpreter.symboles.SymbolTable.SymbolException;
 
 public abstract class Interpreter {
 	@SuppressWarnings("serial")
-	public static class ParseException extends Exception {}
+	public static class ParseException extends Exception {
+
+		public ParseException(String string) {
+			super(string);
+		}}
 	
 	private HashMap<String, CommandFactory> commandMap;
 	private SymbolTable symTable;
@@ -33,13 +37,13 @@ public abstract class Interpreter {
 		blockStack = new Stack<>();
 		symTable = new SymbolTable();
 		
-		commandMap.put("var", new VarCommand.Factory());
-		commandMap.put("openDataServer", new OpenDataServerCommand.Factory());
-		commandMap.put("connect", new ConnectCommand.Factory());
-		commandMap.put("while", new WhileCommand.Factory());
-		commandMap.put("if", new IfCommand.Factory());
-		commandMap.put("print", new PrintCommand.Factory());
-		commandMap.put("sleep", new SleepCommand.Factory());
+		commandMap.put("var", new VarCommand.Factory(symTable));
+		commandMap.put("openDataServer", new OpenDataServerCommand.Factory(symTable));
+		commandMap.put("connect", new ConnectCommand.Factory(symTable));
+		commandMap.put("while", new WhileCommand.Factory(symTable));
+		commandMap.put("if", new IfCommand.Factory(symTable));
+		commandMap.put("print", new PrintCommand.Factory(symTable));
+		commandMap.put("sleep", new SleepCommand.Factory(symTable));
 	}
 	
 	public abstract String getLine() throws EOFException;
@@ -66,10 +70,11 @@ public abstract class Interpreter {
 	}
 	
 	// breaks a line into separate tokens
-	private List<String> lexer(String line){
+	private List<String> lexer(String line) throws ParseException {
 		Pattern r = Pattern.compile(lexerRegex);
 		List<String> tokens = new LinkedList<String>();
 		Matcher m = r.matcher(line);
+		// TODO: check that no meaningful letter exists between tokens
 		while (m.find()) {
 			tokens.add(line.substring(m.start(), m.end()));
 		}
@@ -77,7 +82,7 @@ public abstract class Interpreter {
 	}
 	
 	// parses as many commands as possible from tokenStream
-	private List<Command> parseTokens(List<String> tokenStream) throws ParseException{
+	private List<Command> parseTokens(List<String> tokenStream) throws ParseException, SymbolException{
 		List<Command> commands = new LinkedList<Command>();
 		while (!tokenStream.isEmpty()) {
 			String openingToken = tokenStream.get(0); 
@@ -95,7 +100,7 @@ public abstract class Interpreter {
 				continue;
 			}
 			if (openingToken.equals("}")) {
-				if(blockStack.isEmpty()) throw new ParseException(); 
+				if(blockStack.isEmpty()) throw new ParseException("Syntax error: too many '}'"); 
 				MultiLineCommand block = blockStack.pop();
 				if(blockStack.isEmpty())
 					if(block.getOwner() == null)
@@ -121,9 +126,9 @@ public abstract class Interpreter {
 		}
 		return commands;
 	}
-	private Command parseCommand(List<String> tokens) throws ParseException{
+	private Command parseCommand(List<String> tokens) throws ParseException, SymbolException{
 		if(!commandMap.containsKey(tokens.get(0)))
-			return new ExpressionCommand.Factory().create(tokens);
+			return new ExpressionCommand.Factory(symTable).create(tokens);
 		return commandMap.get(tokens.remove(0)).create(tokens);
 	}
 	

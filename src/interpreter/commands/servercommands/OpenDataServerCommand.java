@@ -20,9 +20,12 @@ public class OpenDataServerCommand implements Command {
 		// TODO Auto-generated method stub
 
 	}
-	public static class Factory implements CommandFactory{
+	public static class Factory extends CommandFactory{
+		public Factory(SymbolTable symTable) {
+			super(symTable);
+		}
 		@Override
-		public Command create(List<String> tokens) throws ParseException {
+		public Command create(List<String> tokens) throws ParseException, SymbolException {
 			// TODO Auto-generated method stub
 			return null;
 		}

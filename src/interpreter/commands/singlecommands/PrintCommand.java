@@ -36,14 +36,18 @@ public class PrintCommand implements Command {
 	public void doCommand(SymbolTable symTable) throws SymbolException {
 		value.printMe();
 	}
-	public static class Factory implements CommandFactory{
+	public static class Factory extends CommandFactory{
+		public Factory(SymbolTable symTable) {
+			super(symTable);
+		}
+
 		@Override
-		public Command create(List<String> tokens) throws ParseException {
-			if(tokens.isEmpty()) throw new ParseException();
+		public Command create(List<String> tokens) throws ParseException, SymbolException {
+			if(tokens.isEmpty()) throw new ParseException("Command 'print' must have an argument");
 			String s = tokens.get(0);
 			if(tokens.size() == 1 && s.startsWith("\"") && s.endsWith("\""))
 				return new PrintCommand(s.substring(1, s.length()-1));
-			return new PrintCommand(new MathExpressionBuilder().create(tokens));
+			return new PrintCommand(new MathExpressionBuilder(symTable).create(tokens));
 		}
 		
 	}

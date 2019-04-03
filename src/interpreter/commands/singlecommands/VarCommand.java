@@ -47,9 +47,12 @@ public class VarCommand implements Command {
 	public void doCommand(SymbolTable symTable) throws SymbolException {
 		symTable.addSymbol(symName, s.createSymbol(symTable));
 	}
-	public static class Factory implements CommandFactory{
+	public static class Factory extends CommandFactory{
+		public Factory(SymbolTable symTable) {
+			super(symTable);
+		}
 		@Override
-		public Command create(List<String> tokens) throws ParseException {
+		public Command create(List<String> tokens) throws ParseException, SymbolException {
 			// TODO Auto-generated method stub
 			return null;
 		}

@@ -47,4 +47,7 @@ public class SymbolTable {
 		if(symTable.containsKey(s)) throw new SymbolAlreadyExistException(s);
 		symTable.put(s, sym);
 	}
+	public boolean hasSymbol(String s) {
+		return symTable.containsKey(s);
+	}
 }

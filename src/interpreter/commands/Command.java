@@ -9,8 +9,6 @@ import interpreter.symboles.SymbolTable.SymbolException;
  * @author Amit Koren
  */
 public interface Command {
-	@SuppressWarnings("serial")
-	public static class ParseErrorException extends Exception {}
 	
 	public void doCommand(SymbolTable symTable) throws SymbolException; 
 	
