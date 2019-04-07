@@ -16,6 +16,7 @@ import interpreter.symboles.SymbolTable.SymbolException;
  * 
  */
 public class WhileCommand extends ControlCommand{
+	
 	private BooleanExpression exp;
 	
 	public WhileCommand(BooleanExpression exp) {

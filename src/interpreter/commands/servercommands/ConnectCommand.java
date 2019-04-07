@@ -1,43 +1,85 @@
 package interpreter.commands.servercommands;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.List;
 
 import interpreter.Interpreter.ParseException;
 import interpreter.commands.Command;
 import interpreter.commands.factory.CommandFactory;
-import interpreter.symboles.Symbol;
+import interpreter.expression.builders.MathExpressionBuilder;
+import interpreter.expression.math.MathExpression;
 import interpreter.symboles.SymbolTable;
 import interpreter.symboles.SymbolTable.SymbolException;
+
 /**
- * The Command was created in the purpose of 
- * having the ability to connect to the FlightGear Server
+ * The Command was created in the purpose of having the ability to connect to
+ * the FlightGear Server
+ * 
  * @author Arik Regev
  * @author Amit Koren
  */
 public class ConnectCommand implements Command {
-	private String varName;
-	private String[] parameters;
-	
-	public ConnectCommand(String varName, String[] parms) {
-		this.varName = varName;
-		this.parameters = parms;
+	@SuppressWarnings("serial")
+	public static class ConnectException extends Exception {
+		public ConnectException(String s) {
+			super(s);
+		}
 	}
+
+	private String ipAddr;
+	private double port;
+	private Socket conSock;
+	private PrintWriter out;
+	private BufferedReader in;
+
+	public ConnectCommand(String ipAddr, MathExpression port) {
+		this.ipAddr = ipAddr;
+		this.port = port.calculateNumber();
+		this.conSock = null;
+		this.out = null;
+		this.in = null;
+	}
+
 	@Override
 	public void doCommand(SymbolTable symTable) throws SymbolException {
-		Symbol sym = symTable.getSymbol(this.varName);
-		// TODO: complete after solve Expression.
+		try {
+			this.conSock = new Socket(ipAddr, (int) port);
+			this.out = new PrintWriter(conSock.getOutputStream(), true);
+			this.in = new BufferedReader(new InputStreamReader(conSock.getInputStream()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
-	public static class Factory extends CommandFactory{
+
+	public void closeConnectoin() throws IOException /* Check */ {
+		if (this.in != null)
+			this.in.close();
+		if (this.out != null)
+			this.out.close();
+		if (this.conSock != null)
+			this.conSock.close();
+		System.out.println("Connection Closed!");
+
+	}
+
+	public static class Factory extends CommandFactory {
 		public Factory(SymbolTable symTable) {
 			super(symTable);
 		}
+
 		@Override
 		public Command create(List<String> tokens) throws ParseException, SymbolException {
-			// TODO Auto-generated method stub
-			return null;
+			if (!tokens.get(0).equals("connect"))
+				throw new ParseException("Parse Error: " + tokens.get(0) + "is not a connect command!");
+			tokens.remove(0);
+			return new ConnectCommand(tokens.get(0), new MathExpressionBuilder(symTable).create(tokens));
 		}
-		
+
 	}
 
 }
