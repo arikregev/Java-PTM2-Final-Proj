@@ -11,5 +11,15 @@ public class UnaryMinusExpression implements MathExpression {
 	public double calculateNumber() {
 		return -(this.exp.calculateNumber());
 	}
-
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof UnaryMinusExpression))
+			return false;
+		UnaryMinusExpression other = (UnaryMinusExpression) obj;
+		return exp.equals(other.exp);
+	}
 }

@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import interpreter.Interpreter.ParseException;
 import interpreter.commands.Command;
 import interpreter.commands.factory.CommandFactory;
-import interpreter.expression.builders.MathExpressionBuilder;
+import interpreter.expression.builders.ExpressionBuilder;
 import interpreter.expression.math.MathExpression;
 import interpreter.symboles.SymbolTable;
 import interpreter.symboles.SymbolTable.SymbolException;
@@ -40,7 +40,7 @@ public class SleepCommand implements Command {
 		public Command create(List<String> tokens) throws ParseException, SymbolException {
 			if(!tokens.get(0).equals("sleep")) 
 					throw new ParseException("Parse Error:" + tokens.get(0) + "is not a Sleep Command");
-			return new SleepCommand(new MathExpressionBuilder(symTable).create(tokens));
+			return new SleepCommand(new ExpressionBuilder(symTable).createMathExpression(tokens));
 		}
 		
 	}

@@ -11,7 +11,17 @@ public class BiggerThenExpression extends ComparisonExpression {
 	@Override
 	public boolean calculateLogic() {
 		return left.calculateNumber() > right.calculateNumber(); //Returns True or False for an Bigger Then Expression
-		
+	}
+	
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof BiggerThenExpression))
+			return false;
+		BiggerThenExpression other = (BiggerThenExpression) obj;
+		return left.equals(other.left) && right.equals(other.right);
 	}
 
 }

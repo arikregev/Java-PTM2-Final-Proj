@@ -21,5 +21,19 @@ public class SymbolExpression implements MathExpression, BooleanExpression {
 	public Symbol getSym() {
 		return sym;
 	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof SymbolExpression))
+			return false;
+		SymbolExpression other = (SymbolExpression) obj;
+//		if (sym == null && other.sym != null) {
+//			return false;
+//		} 
+		return sym.equals(other.sym);
+	}
 	
 }

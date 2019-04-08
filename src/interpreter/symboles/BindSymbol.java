@@ -27,5 +27,17 @@ public class BindSymbol implements Symbol {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof BindSymbol))
+			return false;
+		BindSymbol other = (BindSymbol) obj;
+		return path.equals(other.path);
+	}
 
 }

@@ -9,7 +9,7 @@ package interpreter.expression.logic;
  */
 public class AndExpression extends LogicExpression {
 
-	public AndExpression(LogicExpression left, LogicExpression right) {
+	public AndExpression(BooleanExpression left, BooleanExpression right) {
 		super(left, right);	
 	}
 	

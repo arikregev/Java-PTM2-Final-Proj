@@ -19,4 +19,18 @@ public class NumberExpression implements MathExpression, BooleanExpression{
 	public boolean calculateLogic() {
 		return value !=0;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof NumberExpression))
+			return false;
+		NumberExpression other = (NumberExpression) obj;
+		return Double.doubleToLongBits(value) == Double.doubleToLongBits(other.value);
+	}
+	
+	
 }

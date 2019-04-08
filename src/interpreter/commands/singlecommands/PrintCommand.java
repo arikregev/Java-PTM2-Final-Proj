@@ -5,7 +5,7 @@ import java.util.List;
 import interpreter.Interpreter.ParseException;
 import interpreter.commands.Command;
 import interpreter.commands.factory.CommandFactory;
-import interpreter.expression.builders.MathExpressionBuilder;
+import interpreter.expression.builders.ExpressionBuilder;
 import interpreter.expression.math.MathExpression;
 import interpreter.symboles.SymbolTable;
 import interpreter.symboles.SymbolTable.SymbolException;
@@ -47,7 +47,7 @@ public class PrintCommand implements Command {
 			String s = tokens.get(0);
 			if(tokens.size() == 1 && s.startsWith("\"") && s.endsWith("\""))
 				return new PrintCommand(s.substring(1, s.length()-1));
-			return new PrintCommand(new MathExpressionBuilder(symTable).create(tokens));
+			return new PrintCommand(new ExpressionBuilder(symTable).createMathExpression(tokens));
 		}
 		
 	}

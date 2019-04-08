@@ -10,7 +10,7 @@ import java.util.List;
 import interpreter.Interpreter.ParseException;
 import interpreter.commands.Command;
 import interpreter.commands.factory.CommandFactory;
-import interpreter.expression.builders.MathExpressionBuilder;
+import interpreter.expression.builders.ExpressionBuilder;
 import interpreter.expression.math.MathExpression;
 import interpreter.symboles.SymbolTable;
 import interpreter.symboles.SymbolTable.SymbolException;
@@ -77,7 +77,7 @@ public class ConnectCommand implements Command {
 			if (!tokens.get(0).equals("connect"))
 				throw new ParseException("Parse Error: " + tokens.get(0) + "is not a connect command!");
 			tokens.remove(0);
-			return new ConnectCommand(tokens.get(0), new MathExpressionBuilder(symTable).create(tokens));
+			return new ConnectCommand(tokens.get(0), new ExpressionBuilder(symTable).createMathExpression(tokens));
 		}
 
 	}

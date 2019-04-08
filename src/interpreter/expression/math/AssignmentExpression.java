@@ -18,4 +18,16 @@ public class AssignmentExpression implements MathExpression {
 		return value;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof AssignmentExpression))
+			return false;
+		AssignmentExpression other = (AssignmentExpression) obj;
+		return left.equals(other.left) && right.equals(other.right);
+	}
+
 }

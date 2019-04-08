@@ -8,7 +8,7 @@ public class OrExpression extends LogicExpression {
 	 * @author Arik Regev
 	 * @author Amit Koren
 	 */
-	public OrExpression(LogicExpression left, LogicExpression right) {
+	public OrExpression(BooleanExpression left, BooleanExpression right) {
 		super(left, right);
 		// TODO Auto-generated constructor stub
 	}

@@ -11,7 +11,18 @@ public class LowerEqualsExpression extends ComparisonExpression {
 	@Override
 	public boolean calculateLogic() {
 		return left.calculateNumber() <= right.calculateNumber();
-		
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof LowerEqualsExpression))
+			return false;
+		LowerEqualsExpression other = (LowerEqualsExpression) obj;
+		return left.equals(other.left) && right.equals(other.right);
 	}
 
 }
