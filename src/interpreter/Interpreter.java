@@ -46,6 +46,9 @@ public abstract class Interpreter {
 		commandMap.put("sleep", new SleepCommand.Factory(symTable));
 	}
 	
+	public Interpreter(HashMap<String,CommandFactory> f) {
+		//TODO - receive the commands from OutsideSource
+	}
 	public abstract String getLine() throws EOFException;
 	
 	public void run(){
@@ -57,7 +60,7 @@ public abstract class Interpreter {
 				
 				// syntax + semantic analysis
 				for (Command c: parseTokens(tokenStream)) {
-					c.doCommand(symTable);
+					c.execute(symTable);
 				}	
 			}
 		}

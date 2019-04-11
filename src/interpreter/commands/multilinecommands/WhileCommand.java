@@ -23,9 +23,9 @@ public class WhileCommand extends ControlCommand{
 		this.exp = exp;
 	}
 	@Override
-	public void doCommand(SymbolTable symTable) throws SymbolException {
+	public void execute(SymbolTable symTable) throws SymbolException {
 		while(exp.calculateLogic()) {
-			innerCommand.doCommand(symTable);
+			innerCommand.execute(symTable);
 		}
 	}
 	public static class Factory extends CommandFactory{

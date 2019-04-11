@@ -22,9 +22,9 @@ public class IfCommand extends ControlCommand{
 		this.exp = exp;
 	}
 	@Override
-	public void doCommand(SymbolTable symTable) throws SymbolException {
+	public void execute(SymbolTable symTable) throws SymbolException {
 		if(exp.calculateLogic()) { 
-			innerCommand.doCommand(symTable);
+			innerCommand.execute(symTable);
 		}
 	}
 	public static class Factory extends CommandFactory{
@@ -33,7 +33,9 @@ public class IfCommand extends ControlCommand{
 		}
 		@Override
 		public Command create(List<String> tokens) throws ParseException, SymbolException {
-			// TODO Auto-generated method stub
+			if(!tokens.get(0).contains("while"))
+				throw new ParseException("Parse Error: " + tokens.get(0) + "is not a while Command!");
+			
 			return null;
 		}
 		

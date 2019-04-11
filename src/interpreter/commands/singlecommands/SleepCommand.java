@@ -25,7 +25,7 @@ public class SleepCommand implements Command {
 	}
 
 	@Override
-	public void doCommand(SymbolTable symTable) throws SymbolException {
+	public void execute(SymbolTable symTable) throws SymbolException {
 		try {
 			TimeUnit.MILLISECONDS.sleep(this.parameter);
 		} catch (InterruptedException e) {

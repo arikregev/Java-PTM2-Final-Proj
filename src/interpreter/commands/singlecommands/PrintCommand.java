@@ -33,7 +33,7 @@ public class PrintCommand implements Command {
 		this.value = ()->{System.out.println(exp.calculateNumber());}; // same here
 	}
 	@Override
-	public void doCommand(SymbolTable symTable) throws SymbolException {
+	public void execute(SymbolTable symTable) throws SymbolException {
 		value.printMe();
 	}
 	public static class Factory extends CommandFactory{

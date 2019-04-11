@@ -33,9 +33,9 @@ public class MultiLineCommand implements Command{
 		subCommands.add(c);
 	}
 	@Override
-	public void doCommand(SymbolTable symTable) throws SymbolException {
+	public void execute(SymbolTable symTable) throws SymbolException {
 		for(Command c : subCommands) 
-			c.doCommand(symTable);
+			c.execute(symTable);
 		
 	}
 		

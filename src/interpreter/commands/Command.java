@@ -10,6 +10,6 @@ import interpreter.symboles.SymbolTable.SymbolException;
  */
 public interface Command {
 	
-	public void doCommand(SymbolTable symTable) throws SymbolException; 
+	public void execute(SymbolTable symTable) throws SymbolException; 
 	
 }

@@ -44,7 +44,7 @@ public class VarCommand implements Command {
 	}
 
 	@Override
-	public void doCommand(SymbolTable symTable) throws SymbolException {
+	public void execute(SymbolTable symTable) throws SymbolException {
 		symTable.addSymbol(symName, s.createSymbol(symTable));
 	}
 	public static class Factory extends CommandFactory{

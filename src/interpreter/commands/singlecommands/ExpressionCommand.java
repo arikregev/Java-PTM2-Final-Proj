@@ -27,7 +27,7 @@ public class ExpressionCommand implements Command {
 	}
 	
 	@Override
-	public void doCommand(SymbolTable symTable) throws SymbolException {
+	public void execute(SymbolTable symTable) throws SymbolException {
 		varValue.calculateNumber();
 	}
 	public static class Factory extends CommandFactory{

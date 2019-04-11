@@ -34,22 +34,19 @@ public class ConnectCommand implements Command {
 	private double port;
 	private Socket conSock;
 	private PrintWriter out;
-	private BufferedReader in;
 
 	public ConnectCommand(String ipAddr, MathExpression port) {
 		this.ipAddr = ipAddr;
 		this.port = port.calculateNumber();
 		this.conSock = null;
 		this.out = null;
-		this.in = null;
 	}
 
 	@Override
-	public void doCommand(SymbolTable symTable) throws SymbolException {
+	public void execute(SymbolTable symTable) throws SymbolException {
 		try {
 			this.conSock = new Socket(ipAddr, (int) port);
 			this.out = new PrintWriter(conSock.getOutputStream(), true);
-			this.in = new BufferedReader(new InputStreamReader(conSock.getInputStream()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -57,8 +54,6 @@ public class ConnectCommand implements Command {
 	}
 
 	public void closeConnectoin() throws IOException /* Check */ {
-		if (this.in != null)
-			this.in.close();
 		if (this.out != null)
 			this.out.close();
 		if (this.conSock != null)
