@@ -51,7 +51,6 @@ public class PrintCommand implements Command {
 				throw new ParseException("Invalid expression at: " + tokens.get(0));
 			return new PrintCommand(mathExp);
 		}
-		
 	}
 
 }
