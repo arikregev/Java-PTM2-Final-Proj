@@ -6,6 +6,7 @@ import java.util.List;
 import interpreter.Interpreter.ParseException;
 import interpreter.commands.Command;
 import interpreter.commands.factory.CommandFactory;
+import interpreter.expression.builders.ExpressionBuilder;
 import interpreter.expression.logic.BooleanExpression;
 import interpreter.symboles.SymbolTable;
 import interpreter.symboles.SymbolTable.SymbolException;
@@ -22,21 +23,20 @@ public class IfCommand extends ControlCommand{
 		this.exp = exp;
 	}
 	@Override
-	public void execute(SymbolTable symTable) throws SymbolException {
-		if(exp.calculateLogic()) { 
-			innerCommand.execute(symTable);
+	public boolean execute(SymbolTable symTable) throws SymbolException {
+		if(exp.calculateLogic(symTable)) { 
+			return innerCommand.execute(symTable);
 		}
+		return true;
 	}
 	public static class Factory extends CommandFactory{
-		public Factory(SymbolTable symTable) {
-			super(symTable);
-		}
 		@Override
 		public Command create(List<String> tokens) throws ParseException, SymbolException {
-			if(!tokens.get(0).contains("while"))
-				throw new ParseException("Parse Error: " + tokens.get(0) + "is not a while Command!");
+			BooleanExpression booleanExp = new ExpressionBuilder().createBooleanExpression(tokens);
+			if (!tokens.isEmpty())
+				throw new ParseException("Invalid expression at: " + tokens.get(0));
+			return new IfCommand(booleanExp);
 			
-			return null;
 		}
 		
 	}

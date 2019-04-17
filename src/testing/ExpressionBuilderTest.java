@@ -12,14 +12,9 @@ import interpreter.expression.NumberExpression;
 import interpreter.expression.SymbolExpression;
 import interpreter.expression.builders.ExpressionBuilder;
 import interpreter.expression.logic.BooleanExpression;
-import interpreter.expression.logic.comparisonExpressions.BiggerThenExpression;
-import interpreter.expression.math.AssignmentExpression;
-import interpreter.expression.math.DivideExpression;
-import interpreter.expression.math.MathExpression;
-import interpreter.expression.math.MinusExpression;
-import interpreter.expression.math.MultiplyExpression;
-import interpreter.expression.math.PlusExpression;
-import interpreter.expression.math.UnaryMinusExpression;
+import interpreter.expression.logic.comparisonExpressions.*;
+import interpreter.expression.math.*;
+
 import interpreter.symboles.RegularSymbol;
 import interpreter.symboles.SymbolTable;
 import interpreter.symboles.SymbolTable.SymbolException;
@@ -28,7 +23,7 @@ class ExpressionBuilderTest {
 
 	@Test
 	void emptyExpressionThrowsTest() {
-		ExpressionBuilder builder = new ExpressionBuilder(null);
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		ParseException e = assertThrows(ParseException.class, () -> builder.createMathExpression(new ArrayList<String>()));
 		assertEquals("Expression must not be empty", e.getMessage());
@@ -59,7 +54,7 @@ class ExpressionBuilderTest {
 		DivideExpression expectedDiv = new DivideExpression(new NumberExpression(5), new NumberExpression(4));
 		
 		
-		ExpressionBuilder builder = new ExpressionBuilder(null);
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		MathExpression outputPlus = builder.createMathExpression(tokensPlus);
 		MathExpression outputMinus = builder.createMathExpression(tokensMinus);
@@ -79,7 +74,7 @@ class ExpressionBuilderTest {
 		tokensPlus.add("(");
 		tokensPlus.add("5");
 		
-		ExpressionBuilder builder = new ExpressionBuilder(null);
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		ParseException e = assertThrows(ParseException.class, () -> builder.createMathExpression(tokensPlus));
 		assertEquals("Too many open Parentheses", e.getMessage());
@@ -93,7 +88,7 @@ class ExpressionBuilderTest {
 		tokensPlus.add(")");
 		tokensPlus.add(")");
 		
-		ExpressionBuilder builder = new ExpressionBuilder(null);
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		ParseException e = assertThrows(ParseException.class, () -> builder.createMathExpression(tokensPlus));
 		assertEquals("Too many closing Parentheses", e.getMessage());
@@ -116,7 +111,7 @@ class ExpressionBuilderTest {
 						new NumberExpression(3));
 		
 		
-		ExpressionBuilder builder = new ExpressionBuilder(null);
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		MathExpression outputPlus = builder.createMathExpression(tokensPlus);
 		
@@ -141,7 +136,7 @@ class ExpressionBuilderTest {
 						new NumberExpression(3));
 		
 		
-		ExpressionBuilder builder = new ExpressionBuilder(null);
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		MathExpression outputPlus = builder.createMathExpression(tokens);
 		
@@ -166,7 +161,7 @@ class ExpressionBuilderTest {
 								new NumberExpression(3)));
 		
 		
-		ExpressionBuilder builder = new ExpressionBuilder(null);
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		MathExpression outputPlus = builder.createMathExpression(tokens);
 		
@@ -191,7 +186,7 @@ class ExpressionBuilderTest {
 						new NumberExpression(3));
 		
 		
-		ExpressionBuilder builder = new ExpressionBuilder(null);
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		MathExpression outputPlus = builder.createMathExpression(tokens);
 		
@@ -218,7 +213,7 @@ class ExpressionBuilderTest {
 							new NumberExpression(3)));
 		
 		
-		ExpressionBuilder builder = new ExpressionBuilder(null);
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		MathExpression outputPlus = builder.createMathExpression(tokens);
 		
@@ -234,7 +229,7 @@ class ExpressionBuilderTest {
 		UnaryMinusExpression expectedPlus = 
 				new UnaryMinusExpression(new NumberExpression(5));
 		
-		ExpressionBuilder builder = new ExpressionBuilder(null);
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		MathExpression outputPlus = builder.createMathExpression(tokens);
 		
@@ -255,7 +250,7 @@ class ExpressionBuilderTest {
 						new UnaryMinusExpression(new NumberExpression(5)),
 						new NumberExpression(4));
 		
-		ExpressionBuilder builder = new ExpressionBuilder(null);
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		MathExpression outputPlus = builder.createMathExpression(tokens);
 		
@@ -276,7 +271,7 @@ class ExpressionBuilderTest {
 						new NumberExpression(5),
 						new UnaryMinusExpression(new NumberExpression(4)));
 		
-		ExpressionBuilder builder = new ExpressionBuilder(null);
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		MathExpression outputPlus = builder.createMathExpression(tokens);
 		
@@ -303,14 +298,14 @@ class ExpressionBuilderTest {
 							new NumberExpression(2))),
 					new NumberExpression(7));
 		
-		ExpressionBuilder builder = new ExpressionBuilder(null);
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		MathExpression outputPlus = builder.createMathExpression(tokens);
 		
 		assertEquals(expectedPlus, outputPlus);
 		
 		// for the sports
-		assertEquals(-14, outputPlus.calculateNumber(), 0.001);
+		assertEquals(-14, outputPlus.calculateNumber(null), 0.001);
 		
 	}
 	
@@ -322,21 +317,21 @@ class ExpressionBuilderTest {
 		tokens.add("4");
 		
 		SymbolTable table = new SymbolTable();
-		table.addSymbol("a", new RegularSymbol(0));
+		table.addSymbol("a", new RegularSymbol("a"));
 		
 		AssignmentExpression expectedPlus = 
 				new AssignmentExpression(
-						new SymbolExpression(new RegularSymbol(0)),
+						new SymbolExpression("a"),
 						new NumberExpression(4));
 		
-		ExpressionBuilder builder = new ExpressionBuilder(table);
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		MathExpression outputPlus = builder.createMathExpression(tokens);
 		
 		assertEquals(expectedPlus, outputPlus);
 		
 		// check assignment
-		assertEquals(4, outputPlus.calculateNumber(), 0.001);
+		assertEquals(4, outputPlus.calculateNumber(table), 0.001);
 		assertEquals(4, table.getSymbol("a").getValue(), 0.001);
 		
 	}
@@ -351,23 +346,23 @@ class ExpressionBuilderTest {
 		tokens.add("3");
 		
 		SymbolTable table = new SymbolTable();
-		table.addSymbol("a", new RegularSymbol(0));
+		table.addSymbol("a", new RegularSymbol("a"));
 		
 		AssignmentExpression expectedPlus = 
 				new AssignmentExpression(
-						new SymbolExpression(new RegularSymbol(0)),
+						new SymbolExpression("a"),
 						new PlusExpression(
 								new NumberExpression(4), 
 								new NumberExpression(3)));
 		
-		ExpressionBuilder builder = new ExpressionBuilder(table);
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		MathExpression outputPlus = builder.createMathExpression(tokens);
 		
 		assertEquals(expectedPlus, outputPlus);
 
 		// check assignment
-		assertEquals(7, outputPlus.calculateNumber(), 0.001);
+		assertEquals(7, outputPlus.calculateNumber(table), 0.001);
 		assertEquals(7, table.getSymbol("a").getValue(), 0.001);
 	}
 	
@@ -381,31 +376,31 @@ class ExpressionBuilderTest {
 		tokens.add("4");
 		
 		SymbolTable table = new SymbolTable();
-		table.addSymbol("a", new RegularSymbol(0));
-		table.addSymbol("b", new RegularSymbol(0));
+		table.addSymbol("a", new RegularSymbol("a"));
+		table.addSymbol("b", new RegularSymbol("b"));
 		
 		AssignmentExpression expectedPlus = 
 				new AssignmentExpression(
-						new SymbolExpression(new RegularSymbol(0)),
+						new SymbolExpression("a"),
 						new AssignmentExpression(
-								new SymbolExpression(new RegularSymbol(0)),
+								new SymbolExpression("b"),
 								new NumberExpression(4)));
 		
-		ExpressionBuilder builder = new ExpressionBuilder(table);
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		MathExpression outputPlus = builder.createMathExpression(tokens);
 		
 		assertEquals(expectedPlus, outputPlus);
 		
 		// check assignment
-		assertEquals(4, outputPlus.calculateNumber(), 0.001);
+		assertEquals(4, outputPlus.calculateNumber(table), 0.001);
 		assertEquals(4, table.getSymbol("a").getValue(), 0.001);
 		assertEquals(4, table.getSymbol("b").getValue(), 0.001);
 		
 	}
 	
 	@Test
-	void SimpleComparisonTest() throws ParseException, SymbolException {
+	void SimpleComparisonTest1() throws ParseException, SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("6");
 		tokens.add(">");
@@ -416,11 +411,172 @@ class ExpressionBuilderTest {
 						new NumberExpression(6),
 						new NumberExpression(8));
 		
-		ExpressionBuilder builder = new ExpressionBuilder(null);
+		ExpressionBuilder builder = new ExpressionBuilder();
+		
+		BooleanExpression output = builder.createBooleanExpression(tokens);
+		
+		assertEquals(expected, output);
+	}
+	@Test
+	void BiggerThenComparisonTest2() throws ParseException, SymbolException {
+		ArrayList<String> tokens = new ArrayList<String>();
+		tokens.add("8");
+		tokens.add(">");
+		tokens.add("6");
+		
+		BiggerThenExpression expected = 
+				new BiggerThenExpression(
+						new NumberExpression(8),
+						new NumberExpression(6));
+		
+		ExpressionBuilder builder = new ExpressionBuilder();
 		
 		BooleanExpression output = builder.createBooleanExpression(tokens);
 		
 		assertEquals(expected, output);
 	}
 
+	@Test
+	void LowerEqualsExpressionTest() throws ParseException, SymbolException {
+		ArrayList<String> tokens = new ArrayList<String>();
+		tokens.add("2");
+		tokens.add("<=");
+		tokens.add("9");
+		
+		LowerEqualsExpression expected = 
+				new LowerEqualsExpression(
+						new NumberExpression(2),
+						new NumberExpression(9));
+		
+		ExpressionBuilder builder = new ExpressionBuilder();
+		
+		BooleanExpression output = builder.createBooleanExpression(tokens);
+		
+		assertEquals(expected, output);
+	}
+
+	@Test
+	void EqualsExpressionTest() throws ParseException, SymbolException {
+		ArrayList<String> tokens = new ArrayList<String>();
+		tokens.add("8");
+		tokens.add("==");
+		tokens.add("8");
+		
+		EqualsExpression expected = 
+				new EqualsExpression(
+						new NumberExpression(8),
+						new NumberExpression(8));
+		
+		ExpressionBuilder builder = new ExpressionBuilder();
+		
+		BooleanExpression output = builder.createBooleanExpression(tokens);
+		
+		assertEquals(expected, output);
+	}
+
+	@Test
+	void BiggerEqualsComparisonTest() throws ParseException, SymbolException {
+		ArrayList<String> tokens = new ArrayList<String>();
+		tokens.add("8");
+		tokens.add(">=");
+		tokens.add("6");
+		
+		BiggerEqualsExpression expected = 
+				new BiggerEqualsExpression(
+						new NumberExpression(8),
+						new NumberExpression(6));
+		
+		ExpressionBuilder builder = new ExpressionBuilder();
+		
+		BooleanExpression output = builder.createBooleanExpression(tokens);
+		
+		assertEquals(expected, output);
+	}
+	
+	@Test
+	void SimpleComparisonTest() throws ParseException, SymbolException {
+		ArrayList<String> tokens = new ArrayList<String>();
+		tokens.add("8");
+		tokens.add(">=");
+		tokens.add("6");
+		
+		BiggerEqualsExpression expected = 
+				new BiggerEqualsExpression(
+						new NumberExpression(8),
+						new NumberExpression(6));
+		
+		ExpressionBuilder builder = new ExpressionBuilder();
+		
+		BooleanExpression output = builder.createBooleanExpression(tokens);
+		
+		assertEquals(expected, output);
+	}
+	
+	@Test
+	void multipleExpressionsTest() throws ParseException, SymbolException {
+		ArrayList<String> tokens = new ArrayList<String>();
+		tokens.add("8");
+		tokens.add(">=");
+		tokens.add("6");
+		tokens.add("0");
+		
+		BiggerEqualsExpression expected = 
+				new BiggerEqualsExpression(
+						new NumberExpression(8),
+						new NumberExpression(6));
+		
+		ExpressionBuilder builder = new ExpressionBuilder();
+		
+		BooleanExpression output = builder.createBooleanExpression(tokens);
+		
+		assertEquals(expected, output);
+	}
+	
+	@Test
+	void multipleExpressionsWithParenTest() throws ParseException, SymbolException {
+		ArrayList<String> tokens = new ArrayList<String>();
+		tokens.add("(");
+		tokens.add("6");
+		tokens.add(")");
+		tokens.add("0");
+		
+		NumberExpression expected = new NumberExpression(6);
+		
+		ExpressionBuilder builder = new ExpressionBuilder();
+		
+		MathExpression output = builder.createMathExpression(tokens);
+		
+		assertEquals(expected, output);
+	}
+	@Test
+	void multipleExpressionsWithParenBeforeTest() throws ParseException, SymbolException {
+		ArrayList<String> tokens = new ArrayList<String>();
+		tokens.add("0");
+		tokens.add("(");
+		tokens.add("6");
+		tokens.add(")");
+		
+		NumberExpression expected = new NumberExpression(0);
+		
+		ExpressionBuilder builder = new ExpressionBuilder();
+		
+		MathExpression output = builder.createMathExpression(tokens);
+		
+		assertEquals(expected, output);
+	}
+	
+	@Test
+	void multipleExpressionsInParenTest() throws ParseException, SymbolException {
+		ArrayList<String> tokens = new ArrayList<String>();
+		tokens.add("(");
+		tokens.add("6");
+		tokens.add("0");
+		tokens.add(")");
+		
+		ExpressionBuilder builder = new ExpressionBuilder();
+		
+		ParseException e = assertThrows(ParseException.class, () -> builder.createMathExpression(tokens));
+		//assertEquals("Expression must not be empty", e.getMessage());
+	}
+	
 }

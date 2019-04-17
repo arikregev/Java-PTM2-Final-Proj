@@ -3,23 +3,26 @@ package interpreter.expression;
 import interpreter.expression.logic.BooleanExpression;
 import interpreter.expression.math.MathExpression;
 import interpreter.symboles.Symbol;
+import interpreter.symboles.SymbolTable;
+import interpreter.symboles.SymbolTable.SymbolException;
+import interpreter.symboles.SymbolTable.SymbolNotExistException;
 
 public class SymbolExpression implements MathExpression, BooleanExpression {
-	private Symbol sym;
+	String symbol;
 	
-	public SymbolExpression(Symbol sym) {
-		this.sym = sym;
+	public SymbolExpression(String symbol) {
+		this.symbol = symbol;
 	}
 	@Override
-	public double calculateNumber() {
-		return sym.getValue();
+	public double calculateNumber(SymbolTable symTable) throws SymbolNotExistException, SymbolException {
+		return getSym(symTable).getValue();
 	}
 	@Override
-	public boolean calculateLogic() {
-		return sym.getValue()!=0;
+	public boolean calculateLogic(SymbolTable symTable) throws SymbolNotExistException, SymbolException {
+		return getSym(symTable).getValue()!=0;
 	}
-	public Symbol getSym() {
-		return sym;
+	public Symbol getSym(SymbolTable symTable) throws SymbolNotExistException {
+		return symTable.getSymbol(symbol);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -33,7 +36,7 @@ public class SymbolExpression implements MathExpression, BooleanExpression {
 //		if (sym == null && other.sym != null) {
 //			return false;
 //		} 
-		return sym.equals(other.sym);
+		return symbol.equals(other.symbol);
 	}
 	
 }

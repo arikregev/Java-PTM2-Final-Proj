@@ -33,10 +33,11 @@ public class MultiLineCommand implements Command{
 		subCommands.add(c);
 	}
 	@Override
-	public void execute(SymbolTable symTable) throws SymbolException {
+	public boolean execute(SymbolTable symTable) throws SymbolException {
 		for(Command c : subCommands) 
-			c.execute(symTable);
-		
+			if(!c.execute(symTable))
+				return false;
+		return true;
 	}
 		
 

@@ -5,11 +5,13 @@ import java.util.List;
 import interpreter.Interpreter.ParseException;
 import interpreter.commands.Command;
 import interpreter.commands.factory.CommandFactory;
+import interpreter.expression.builders.ExpressionBuilder;
 import interpreter.expression.math.MathExpression;
 import interpreter.symboles.BindSymbol;
 import interpreter.symboles.RegularSymbol;
 import interpreter.symboles.Symbol;
 import interpreter.symboles.SymbolTable;
+import interpreter.symboles.SymbolTable.SymbolAlreadyExistException;
 import interpreter.symboles.SymbolTable.SymbolException;
 /**
  * Every Var Command represents a link to a parameter in the aircraft.<br>
@@ -26,35 +28,52 @@ public class VarCommand implements Command {
 	 * @author Arik Regev
 	 */
 	private static interface SymbolFactory{
-		public Symbol createSymbol(SymbolTable symTable);
+		public void createSymbol(SymbolTable symTable) throws SymbolException;
 	}
-	
-	public String symName;
 	public SymbolFactory s;
 	
+	public VarCommand(String symName) {
+		this.s = (symTable)->{
+			symTable.addSymbol(symName, new RegularSymbol(symName));
+		};
+	}
+	
 	public VarCommand(String symName, MathExpression exp) {
-		this.symName = symName;
-		this.s = (symTable)->{return new RegularSymbol(exp.calculateNumber());};
+		this.s = (symTable)->{
+			symTable.addSymbol(symName, new RegularSymbol(symName));
+			exp.calculateNumber(symTable);
+		};
 	}
 		
 	public VarCommand(String symName, String path) {
-		this.symName = symName;
-		this.s = (symTable)->{return new BindSymbol(path, symTable);};
+		this.s = (symTable)->{
+			symTable.addSymbol(symName, new BindSymbol(path, symTable));
+		};
 		
 	}
 
 	@Override
-	public void execute(SymbolTable symTable) throws SymbolException {
-		symTable.addSymbol(symName, s.createSymbol(symTable));
+	public boolean execute(SymbolTable symTable) throws SymbolException {
+		s.createSymbol(symTable);
+		return true;
 	}
 	public static class Factory extends CommandFactory{
-		public Factory(SymbolTable symTable) {
-			super(symTable);
-		}
 		@Override
 		public Command create(List<String> tokens) throws ParseException, SymbolException {
-			// TODO Auto-generated method stub
-			return null;
+			if (tokens.isEmpty())
+				throw new ParseException("Expression must not be empty");
+			String symName = tokens.get(0);
+			if (tokens.size() == 1)
+				return new VarCommand(symName);
+			if (tokens.get(2) == "bind") {
+				if (tokens.size() > 4)
+					throw new ParseException("Var (bind) expression too long");
+				return new VarCommand(symName, tokens.get(3));
+			}
+			MathExpression exp = new ExpressionBuilder().createMathExpression(tokens);
+			if (!tokens.isEmpty())
+				throw new ParseException("Invalid expression at: " + tokens.get(0));
+			return new VarCommand(symName, exp);
 		}
 		
 	}

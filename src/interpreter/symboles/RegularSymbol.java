@@ -1,6 +1,7 @@
 package interpreter.symboles;
 
 import interpreter.expression.NumberExpression;
+import interpreter.symboles.SymbolTable.SymbolUnInitializedException;
 
 /**
  * Regular Symbol represents variables that are numeric based like int, double. 
@@ -11,11 +12,13 @@ import interpreter.expression.NumberExpression;
  */
 public class RegularSymbol implements Symbol {
 
-	private double value;
-
-	public RegularSymbol(double value) {
-		this.value = value;
+	private String symName;
+	
+	public RegularSymbol(String symName) {
+		this.symName = symName;
 	}
+
+	private Double value = null;
 
 	@Override
 	public void setValue(double val) {
@@ -23,7 +26,9 @@ public class RegularSymbol implements Symbol {
 	}
 
 	@Override
-	public double getValue() {
+	public double getValue() throws SymbolUnInitializedException{
+		if (this.value == null)
+			throw new SymbolUnInitializedException(symName);
 		return this.value;
 	}
 	

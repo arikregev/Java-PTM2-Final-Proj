@@ -1,5 +1,8 @@
 package interpreter.expression.logic;
 
+import interpreter.symboles.SymbolTable;
+import interpreter.symboles.SymbolTable.SymbolException;
+
 public class OrExpression extends LogicExpression {
 	/**
 	 * Class to resolve an answer to the OR Expression in out new Language
@@ -17,9 +20,9 @@ public class OrExpression extends LogicExpression {
 	 * Returns True or False for the OR Expression 
 	 */
 	@Override
-	public boolean calculateLogic() {
+	public boolean calculateLogic(SymbolTable symTable) throws SymbolException {
 		// TODO Auto-generated method stub
-		return this.left.calculateLogic() || this.right.calculateLogic();
+		return this.left.calculateLogic(symTable) || this.right.calculateLogic(symTable);
 	}
 
 }

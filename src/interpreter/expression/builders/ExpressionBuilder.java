@@ -13,25 +13,25 @@ import interpreter.symboles.SymbolTable;
 import interpreter.symboles.SymbolTable.SymbolException;
 
 public class ExpressionBuilder {
-	private SymbolTable symTable;
-	public ExpressionBuilder(SymbolTable symTable) {
-		this.symTable = symTable;
-	}
 	
-	public MathExpression createMathExpression(List<String> tokens) throws ParseException, SymbolException{
+	public MathExpression createMathExpression(List<String> tokens) throws ParseException{
 		return makeMathExpressionFromQueue(makeTokenQueue(tokens));		
 	}
 	
-	public BooleanExpression createBooleanExpression(List<String> tokens) throws ParseException, SymbolException{
+	public BooleanExpression createBooleanExpression(List<String> tokens) throws ParseException{
 		return makeBooleanExpressionFromQueue(makeTokenQueue(tokens));		
 	}
 	
 
-	private LinkedList<String> makeTokenQueue(List<String> tokens) throws ParseException, SymbolException{
+	private LinkedList<String> makeTokenQueue(List<String> tokens) throws ParseException{
+		if (tokens.isEmpty())
+			throw new ParseException("Expression must not be empty");
 		LinkedList<String> queue = new LinkedList<String>();
 		Stack<String> stack = new Stack<>();
 		String prevToken = null;
-		for(String token: tokens) {
+		boolean stopDigest = false;
+		while (!tokens.isEmpty()) {
+			String token = tokens.get(0);
 			switch(token) {
 			
 			case "&&":
@@ -91,6 +91,10 @@ public class ExpressionBuilder {
 				break;
 				
 			case "(":
+				if (isStartOfNewExpression(token, prevToken, stack.contains("("))) {
+					stopDigest = true;
+					break;
+				}
 				stack.push(token);
 				break;
 				
@@ -103,10 +107,17 @@ public class ExpressionBuilder {
 				break;
 				
 			default:
+				if (isStartOfNewExpression(token, prevToken, stack.contains("("))) {
+					stopDigest = true;
+					break;
+				}
 				queue.addFirst(token);
 				break;
 			}
 			prevToken = token;
+			if (stopDigest)
+				break;
+			tokens.remove(0);
 		}
 		while (!stack.isEmpty()) {
 			String token = stack.pop();
@@ -117,7 +128,19 @@ public class ExpressionBuilder {
 		return queue;
 	}
 	
-	private MathExpression makeMathExpressionFromQueue(LinkedList<String> queue) throws ParseException, SymbolException {
+	private boolean isStartOfNewExpression(String token, String prevToken, boolean isInsideParens) throws ParseException{
+		if (prevToken == null)
+			return false;
+		if (!prevToken.matches("(\\-|\\+|\\*|\\/|~|=|<|>|<=|>=|==|!=|&&|\\|\\||!|\\()"))
+			if (isInsideParens)
+				throw new ParseException("Illegal expressions at token: " + token);
+			else
+				return true;
+		return false;
+	}
+	
+	
+	private MathExpression makeMathExpressionFromQueue(LinkedList<String> queue) throws ParseException {
 		MathExpression finalResult = null;
 		MathExpression left = null,right = null; // the sub expressions
 		if (queue.isEmpty())
@@ -129,7 +152,7 @@ public class ExpressionBuilder {
 		}
 		else if (token.equals("=")) {
 			right = makeMathExpressionFromQueue(queue);
-			SymbolExpression varName = new SymbolExpression(symTable.getSymbol(queue.removeFirst()));
+			SymbolExpression varName = new SymbolExpression(queue.removeFirst());
 			return new AssignmentExpression(varName, right);
 		}
 		else if (token.equals("~")) {
@@ -155,14 +178,14 @@ public class ExpressionBuilder {
 			} catch(NumberFormatException e) {}
 			// check variable name
 			if (token.matches("\\w+")) {
-				return new SymbolExpression(symTable.getSymbol(token));
+				return new SymbolExpression(token);
 			}
 			throw new ParseException("Illegal token: " + token);
 		}
 		
 		return finalResult;
 	}
-	private BooleanExpression makeBooleanExpressionFromQueue(LinkedList<String> queue) throws ParseException, SymbolException{
+	private BooleanExpression makeBooleanExpressionFromQueue(LinkedList<String> queue) throws ParseException{
 		if (queue.isEmpty())
 			throw new ParseException("Expression must not be empty");
 		String token = queue.removeFirst();
@@ -178,7 +201,7 @@ public class ExpressionBuilder {
 		throw new ParseException("Illegal token: " + token);
 	}
 	
-	private BooleanExpression makeComparisonExpression(String token, LinkedList<String> queue) throws ParseException, SymbolException {
+	private BooleanExpression makeComparisonExpression(String token, LinkedList<String> queue) throws ParseException {
 		MathExpression rightMath = makeMathExpressionFromQueue(queue);
 		MathExpression leftMath = makeMathExpressionFromQueue(queue);
 		switch(token) {
@@ -199,7 +222,7 @@ public class ExpressionBuilder {
 		}
 	}
 	
-	private BooleanExpression makeBinaryLogicExpression(String token, LinkedList<String> queue) throws ParseException, SymbolException {
+	private BooleanExpression makeBinaryLogicExpression(String token, LinkedList<String> queue) throws ParseException {
 		BooleanExpression rightBool = makeBooleanExpressionFromQueue(queue);
 		BooleanExpression leftBool = makeBooleanExpressionFromQueue(queue);
 		switch(token) {

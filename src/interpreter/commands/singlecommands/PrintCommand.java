@@ -22,32 +22,34 @@ public class PrintCommand implements Command {
 	 *
 	 */
 	private static interface Printable{
-		public void printMe();
+		public void printMe(SymbolTable symTable) throws SymbolException;
 	}
 	private Printable value;
 	
 	public PrintCommand(String st) {
-		this.value = ()->{System.out.println(st);}; //Inserting into value the printMe command with the settings of
+		this.value = (SymbolTable symTable)->{System.out.println(st);}; //Inserting into value the printMe command with the settings of
 	}//how to execute it
 	public PrintCommand(MathExpression exp) {
-		this.value = ()->{System.out.println(exp.calculateNumber());}; // same here
+		this.value = (SymbolTable symTable)->{System.out.println(exp.calculateNumber(symTable));}; // same here
 	}
 	@Override
-	public void execute(SymbolTable symTable) throws SymbolException {
-		value.printMe();
+	public boolean execute(SymbolTable symTable) throws SymbolException {
+		value.printMe(symTable);
+		return true;
 	}
 	public static class Factory extends CommandFactory{
-		public Factory(SymbolTable symTable) {
-			super(symTable);
-		}
 
 		@Override
 		public Command create(List<String> tokens) throws ParseException, SymbolException {
-			if(tokens.isEmpty()) throw new ParseException("Command 'print' must have an argument");
+			if (tokens.isEmpty())
+				throw new ParseException("Expression must not be empty");
 			String s = tokens.get(0);
 			if(tokens.size() == 1 && s.startsWith("\"") && s.endsWith("\""))
 				return new PrintCommand(s.substring(1, s.length()-1));
-			return new PrintCommand(new ExpressionBuilder(symTable).createMathExpression(tokens));
+			MathExpression mathExp = new ExpressionBuilder().createMathExpression(tokens);
+			if (!tokens.isEmpty())
+				throw new ParseException("Invalid expression at: " + tokens.get(0));
+			return new PrintCommand(mathExp);
 		}
 		
 	}

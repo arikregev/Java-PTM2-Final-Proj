@@ -1,4 +1,7 @@
 package interpreter.symboles;
+
+import interpreter.symboles.SymbolTable.SymbolUnInitializedException;
+
 /**
  * Bind Symbol variables represents an active link to the Flight gear Simulator.<br>
  * With those links we can get information like altitude, speed and more parameters of the plane<br>
@@ -23,7 +26,7 @@ public class BindSymbol implements Symbol {
 	}
 
 	@Override
-	public double getValue() {
+	public double getValue() throws SymbolUnInitializedException{
 		// TODO Auto-generated method stub
 		return 0;
 	}

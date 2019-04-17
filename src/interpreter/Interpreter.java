@@ -37,13 +37,14 @@ public abstract class Interpreter {
 		blockStack = new Stack<>();
 		symTable = new SymbolTable();
 		
-		commandMap.put("var", new VarCommand.Factory(symTable));
-		commandMap.put("openDataServer", new OpenDataServerCommand.Factory(symTable));
-		commandMap.put("connect", new ConnectCommand.Factory(symTable));
-		commandMap.put("while", new WhileCommand.Factory(symTable));
-		commandMap.put("if", new IfCommand.Factory(symTable));
-		commandMap.put("print", new PrintCommand.Factory(symTable));
-		commandMap.put("sleep", new SleepCommand.Factory(symTable));
+		commandMap.put("var", new VarCommand.Factory());
+		commandMap.put("openDataServer", new OpenDataServerCommand.Factory());
+		commandMap.put("connect", new ConnectCommand.Factory());
+		commandMap.put("while", new WhileCommand.Factory());
+		commandMap.put("if", new IfCommand.Factory());
+		commandMap.put("print", new PrintCommand.Factory());
+		commandMap.put("sleep", new SleepCommand.Factory());
+		commandMap.put("return", new ReturnCommand.Factory());
 	}
 	
 	public Interpreter(HashMap<String,CommandFactory> f) {
@@ -54,22 +55,30 @@ public abstract class Interpreter {
 	public void run(){
 		List<String> tokenStream = new LinkedList<String>();
 		try {
-			while(true) {
+			boolean returned = false;
+			while(!returned) {
 				// lexical analysis
 				tokenStream.addAll(lexer(getLine()));
-				
-				// syntax + semantic analysis
 				for (Command c: parseTokens(tokenStream)) {
-					c.execute(symTable);
+					if (!c.execute(symTable)){
+						returned = true;
+						break;
+					}
 				}	
 			}
 		}
 		catch(EOFException e) {} 
 		catch (SymbolException e) {
 			// TODO print error message to user
+			System.out.println(e.symbolName);
 		} catch (ParseException e) {
 			// TODO print error message to user
+			System.out.println(e.getMessage());
 		} 
+	}
+	
+	public double getReturnValue() {
+		return symTable.getReturnValue();
 	}
 	
 	// breaks a line into separate tokens
@@ -121,17 +130,24 @@ public abstract class Interpreter {
 					&& !tokenStream.get(0).equals("{")) {
 				commandTokens.add(tokenStream.remove(0));
 			}
+			
 			Command cmd = parseCommand(commandTokens);
+			
 			if(!blockStack.isEmpty())
 				blockStack.peek().addSubCommand(cmd);
-			else
+			else if (!(cmd instanceof ControlCommand))
 				commands.add(cmd);
+			
+			if (cmd instanceof ControlCommand)
+				ctrl = (ControlCommand) cmd;
+			else
+				ctrl = null;
 		}
 		return commands;
 	}
 	private Command parseCommand(List<String> tokens) throws ParseException, SymbolException{
 		if(!commandMap.containsKey(tokens.get(0)))
-			return new ExpressionCommand.Factory(symTable).create(tokens);
+			return new ExpressionCommand.Factory().create(tokens);
 		return commandMap.get(tokens.remove(0)).create(tokens);
 	}
 	

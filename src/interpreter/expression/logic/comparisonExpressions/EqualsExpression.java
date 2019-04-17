@@ -1,6 +1,8 @@
 package interpreter.expression.logic.comparisonExpressions;
 
 import interpreter.expression.math.MathExpression;
+import interpreter.symboles.SymbolTable;
+import interpreter.symboles.SymbolTable.SymbolException;
 
 public class EqualsExpression extends ComparisonExpression {
 
@@ -9,8 +11,8 @@ public class EqualsExpression extends ComparisonExpression {
 	}
 
 	@Override
-	public boolean calculateLogic() {
-		return (left.calculateNumber() - right.calculateNumber()) <= 1e-3;
+	public boolean calculateLogic(SymbolTable symTable) throws SymbolException {
+		return (left.calculateNumber(symTable) - right.calculateNumber(symTable)) <= 1e-3;
 	}
 	
 	@Override

@@ -1,6 +1,8 @@
 package interpreter.expression.logic.comparisonExpressions;
 
 import interpreter.expression.math.MathExpression;
+import interpreter.symboles.SymbolTable;
+import interpreter.symboles.SymbolTable.SymbolException;
 
 public class BiggerThenExpression extends ComparisonExpression {
 
@@ -9,8 +11,8 @@ public class BiggerThenExpression extends ComparisonExpression {
 	}
 
 	@Override
-	public boolean calculateLogic() {
-		return left.calculateNumber() > right.calculateNumber(); //Returns True or False for an Bigger Then Expression
+	public boolean calculateLogic(SymbolTable symTable) throws SymbolException {
+		return left.calculateNumber(symTable) > right.calculateNumber(symTable); //Returns True or False for an Bigger Then Expression
 	}
 	
 	public boolean equals(Object obj) {

@@ -2,6 +2,8 @@ package interpreter.expression;
 
 import interpreter.expression.logic.BooleanExpression;
 import interpreter.expression.math.MathExpression;
+import interpreter.symboles.SymbolTable;
+import interpreter.symboles.SymbolTable.SymbolException;
 
 public class NumberExpression implements MathExpression, BooleanExpression{
 	private double value;
@@ -11,12 +13,12 @@ public class NumberExpression implements MathExpression, BooleanExpression{
 	}
 
 	@Override
-	public double calculateNumber() {
+	public double calculateNumber(SymbolTable symTable) throws SymbolException {
 		return value;
 	}
 
 	@Override
-	public boolean calculateLogic() {
+	public boolean calculateLogic(SymbolTable symTable) throws SymbolException {
 		return value !=0;
 	}
 	

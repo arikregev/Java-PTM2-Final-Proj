@@ -1,4 +1,7 @@
 package interpreter.symboles;
+
+import interpreter.symboles.SymbolTable.SymbolUnInitializedException;
+
 /**
  * Symbol Interface, will represent variables declared by the code received.<br>
  * Every Symbol created will be inserted into the Symbol table for control.
@@ -7,5 +10,5 @@ package interpreter.symboles;
  */
 public interface Symbol {
 	public void setValue(double val);
-	public double getValue();
+	public double getValue() throws SymbolUnInitializedException;
 }

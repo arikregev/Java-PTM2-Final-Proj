@@ -1,8 +1,6 @@
 package interpreter.commands.servercommands;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
@@ -31,26 +29,27 @@ public class ConnectCommand implements Command {
 	}
 
 	private String ipAddr;
-	private double port;
+	private MathExpression port;
 	private Socket conSock;
 	private PrintWriter out;
 
 	public ConnectCommand(String ipAddr, MathExpression port) {
 		this.ipAddr = ipAddr;
-		this.port = port.calculateNumber();
+		this.port = port;
 		this.conSock = null;
 		this.out = null;
 	}
 
 	@Override
-	public void execute(SymbolTable symTable) throws SymbolException {
+	public boolean execute(SymbolTable symTable) throws SymbolException {
 		try {
-			this.conSock = new Socket(ipAddr, (int) port);
+			this.conSock = new Socket(ipAddr, (int) port.calculateNumber(symTable));
 			this.out = new PrintWriter(conSock.getOutputStream(), true);
+			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		return false;
 	}
 
 	public void closeConnectoin() throws IOException /* Check */ {
@@ -63,16 +62,15 @@ public class ConnectCommand implements Command {
 	}
 
 	public static class Factory extends CommandFactory {
-		public Factory(SymbolTable symTable) {
-			super(symTable);
-		}
-
 		@Override
 		public Command create(List<String> tokens) throws ParseException, SymbolException {
-			if (!tokens.get(0).equals("connect"))
-				throw new ParseException("Parse Error: " + tokens.get(0) + "is not a connect command!");
-			tokens.remove(0);
-			return new ConnectCommand(tokens.get(0), new ExpressionBuilder(symTable).createMathExpression(tokens));
+			if (tokens.isEmpty())
+				throw new ParseException("Expression must not be empty");
+			String ipAddr = tokens.remove(0);
+			MathExpression mathExp = new ExpressionBuilder().createMathExpression(tokens);
+			if (!tokens.isEmpty())
+				throw new ParseException("Invalid expression at: " + tokens.get(0));
+			return new ConnectCommand(ipAddr, mathExp);
 		}
 
 	}

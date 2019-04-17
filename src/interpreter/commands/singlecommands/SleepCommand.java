@@ -18,29 +18,28 @@ import interpreter.symboles.SymbolTable.SymbolException;
  * @author Amit Koren
  */
 public class SleepCommand implements Command {
-	private long parameter;
+	private MathExpression parameter;
 	
 	public SleepCommand(MathExpression parameter) {
-		this.parameter = (long)parameter.calculateNumber();
+		this.parameter = parameter;
 	}
 
 	@Override
-	public void execute(SymbolTable symTable) throws SymbolException {
+	public boolean execute(SymbolTable symTable) throws SymbolException {
 		try {
-			TimeUnit.MILLISECONDS.sleep(this.parameter);
+			TimeUnit.MILLISECONDS.sleep((long) this.parameter.calculateNumber(symTable));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		return true;
 	}
 	public static class Factory extends CommandFactory{
-		public Factory(SymbolTable symTable) {
-			super(symTable);
-		}
 		@Override
 		public Command create(List<String> tokens) throws ParseException, SymbolException {
-			if(!tokens.get(0).equals("sleep")) 
-					throw new ParseException("Parse Error:" + tokens.get(0) + "is not a Sleep Command");
-			return new SleepCommand(new ExpressionBuilder(symTable).createMathExpression(tokens));
+			MathExpression exp = new ExpressionBuilder().createMathExpression(tokens);
+			if (!tokens.isEmpty())
+				throw new ParseException("Invalid expression at: " + tokens.get(0));
+			return new SleepCommand(exp);
 		}
 		
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 import interpreter.Interpreter.ParseException;
 import interpreter.commands.Command;
 import interpreter.commands.factory.CommandFactory;
+import interpreter.expression.builders.ExpressionBuilder;
 import interpreter.expression.math.MathExpression;
 import interpreter.symboles.Symbol;
 import interpreter.symboles.SymbolTable;
@@ -27,17 +28,17 @@ public class ExpressionCommand implements Command {
 	}
 	
 	@Override
-	public void execute(SymbolTable symTable) throws SymbolException {
-		varValue.calculateNumber();
+	public boolean execute(SymbolTable symTable) throws SymbolException {
+		varValue.calculateNumber(symTable);
+		return true;
 	}
 	public static class Factory extends CommandFactory{
-		public Factory(SymbolTable symTable) {
-			super(symTable);
-		}
 		@Override
 		public Command create(List<String> tokens) throws ParseException, SymbolException {
-			// TODO Auto-generated method stub
-			return null;
+			MathExpression exp = new ExpressionBuilder().createMathExpression(tokens);
+			if (!tokens.isEmpty())
+				throw new ParseException("Invalid expression at: " + tokens.get(0));
+			return new ExpressionCommand(exp);
 		}
 		
 	}

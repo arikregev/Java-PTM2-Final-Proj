@@ -8,12 +8,6 @@ import interpreter.symboles.SymbolTable;
 import interpreter.symboles.SymbolTable.SymbolException;
 
 public abstract class CommandFactory {
-	protected SymbolTable symTable;
-	
-	public CommandFactory(SymbolTable symTable) {
-		this.symTable = symTable;
-	}
-
 
 	public abstract Command create(List<String> tokens) throws ParseException, SymbolException;
 }
