@@ -1,7 +1,8 @@
 package interpreter.expression.math;
 
-import interpreter.symboles.SymbolTable;
-import interpreter.symboles.SymbolTable.SymbolException;
+import interpreter.symbols.Exceptions;
+import interpreter.symbols.SymbolTable;
+import interpreter.symbols.Exceptions.SymbolException;
 
 public class MultiplyExpression extends BinaryExpression{
 
@@ -10,7 +11,7 @@ public class MultiplyExpression extends BinaryExpression{
 	}
 
 	@Override
-	public double calculateNumber(SymbolTable symTable) throws SymbolException {
+	public double calculateNumber(SymbolTable symTable) throws Exceptions.SymbolException {
 		return this.left.calculateNumber(symTable) * this.right.calculateNumber(symTable);
 	}
 	@Override

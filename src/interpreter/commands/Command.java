@@ -1,7 +1,7 @@
 package interpreter.commands;
 
-import interpreter.symboles.SymbolTable;
-import interpreter.symboles.SymbolTable.SymbolException;
+import interpreter.symbols.SymbolTable;
+import interpreter.symbols.Exceptions.SymbolException;
 /**
  * This interface is being Inherited by every Command
  * that will be able to use in our newly invented Language.
@@ -10,6 +10,6 @@ import interpreter.symboles.SymbolTable.SymbolException;
  */
 public interface Command {
 	
-	public boolean execute(SymbolTable symTable) throws SymbolException; 
+	public boolean execute(SymbolTable symTable) throws ExecutionException; 
 	
 }

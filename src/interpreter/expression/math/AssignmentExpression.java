@@ -1,8 +1,9 @@
 package interpreter.expression.math;
 
 import interpreter.expression.SymbolExpression;
-import interpreter.symboles.SymbolTable;
-import interpreter.symboles.SymbolTable.SymbolException;
+import interpreter.symbols.Exceptions;
+import interpreter.symbols.SymbolTable;
+import interpreter.symbols.Exceptions.SymbolException;
 
 public class AssignmentExpression implements MathExpression {
 	private SymbolExpression left;
@@ -14,7 +15,7 @@ public class AssignmentExpression implements MathExpression {
 	}
 
 	@Override
-	public double calculateNumber(SymbolTable symTable) throws SymbolException {
+	public double calculateNumber(SymbolTable symTable) throws Exceptions.SymbolException {
 		double value = right.calculateNumber(symTable);
 		left.getSym(symTable).setValue(value);
 		return value;

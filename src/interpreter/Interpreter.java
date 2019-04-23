@@ -14,8 +14,9 @@ import interpreter.commands.factory.CommandFactory;
 import interpreter.commands.multilinecommands.*;
 import interpreter.commands.servercommands.*;
 import interpreter.commands.singlecommands.*;
-import interpreter.symboles.SymbolTable;
-import interpreter.symboles.SymbolTable.SymbolException;
+import interpreter.symbols.Exceptions;
+import interpreter.symbols.SymbolTable;
+import interpreter.symbols.Exceptions.SymbolException;
 
 public abstract class Interpreter {
 	@SuppressWarnings("serial")
@@ -32,10 +33,10 @@ public abstract class Interpreter {
 	
 	private final String lexerRegex = "(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|-?\\d+\\.?\\d*|-?\\d*\\.?\\d+|\\\".*\\\"|==|!=|<=|>=|<|>|\\+|-|\\*|\\/|&&|\\|\\||!|=|\\(|\\)|\\{|\\}|\\w+)";
 
-	public Interpreter() {
+	public Interpreter(String[] simPaths) {
 		commandMap = new HashMap<>();
 		blockStack = new Stack<>();
-		symTable = new SymbolTable();
+		symTable = new SymbolTable(simPaths);
 		
 		commandMap.put("var", new VarCommand.Factory());
 		commandMap.put("openDataServer", new OpenDataServerCommand.Factory());
@@ -45,6 +46,7 @@ public abstract class Interpreter {
 		commandMap.put("print", new PrintCommand.Factory());
 		commandMap.put("sleep", new SleepCommand.Factory());
 		commandMap.put("return", new ReturnCommand.Factory());
+		commandMap.put("disconnect", new DisconnectCommand.Factory());
 	}
 	
 	public Interpreter(HashMap<String,CommandFactory> f) {
@@ -54,6 +56,7 @@ public abstract class Interpreter {
 	
 	public void run(){
 		List<String> tokenStream = new LinkedList<String>();
+		int lineNumber = 1;
 		try {
 			boolean returned = false;
 			while(!returned) {
@@ -65,15 +68,31 @@ public abstract class Interpreter {
 						break;
 					}
 				}	
+				lineNumber++;
 			}
 		}
 		catch(EOFException e) {} 
-		catch (SymbolException e) {
+		catch (Exceptions.SymbolException e) {
 			// TODO print error message to user
+			System.out.print("Error at line ");
+			System.out.print(lineNumber);
+			System.out.print(" - ");
 			System.out.println(e.symbolName);
 		} catch (ParseException e) {
 			// TODO print error message to user
+			System.out.print("Error at line ");
+			System.out.print(lineNumber);
+			System.out.print(" - ");
 			System.out.println(e.getMessage());
+		} catch (IOExceptionWrapper e) {
+			System.out.print("Error at line ");
+			System.out.print(lineNumber);
+			System.out.print(" - ");
+			System.out.println(e.e.getMessage());
+				// e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} 
 	}
 	
@@ -94,7 +113,7 @@ public abstract class Interpreter {
 	}
 	
 	// parses as many commands as possible from tokenStream
-	private List<Command> parseTokens(List<String> tokenStream) throws ParseException, SymbolException{
+	private List<Command> parseTokens(List<String> tokenStream) throws ParseException{
 		List<Command> commands = new LinkedList<Command>();
 		while (!tokenStream.isEmpty()) {
 			String openingToken = tokenStream.get(0); 
@@ -145,7 +164,7 @@ public abstract class Interpreter {
 		}
 		return commands;
 	}
-	private Command parseCommand(List<String> tokens) throws ParseException, SymbolException{
+	private Command parseCommand(List<String> tokens) throws ParseException{
 		if(!commandMap.containsKey(tokens.get(0)))
 			return new ExpressionCommand.Factory().create(tokens);
 		return commandMap.get(tokens.remove(0)).create(tokens);

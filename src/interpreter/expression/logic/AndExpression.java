@@ -1,7 +1,8 @@
 package interpreter.expression.logic;
 
-import interpreter.symboles.SymbolTable;
-import interpreter.symboles.SymbolTable.SymbolException;
+import interpreter.symbols.Exceptions;
+import interpreter.symbols.SymbolTable;
+import interpreter.symbols.Exceptions.SymbolException;
 
 /**
  * The purpose of this class to resolve an answer to the AND Expression in out new Language
@@ -17,7 +18,7 @@ public class AndExpression extends LogicExpression {
 	}
 	
 	@Override
-	public boolean calculateLogic(SymbolTable symTable) throws SymbolException {
+	public boolean calculateLogic(SymbolTable symTable) throws Exceptions.SymbolException {
 		return left.calculateLogic(symTable) && right.calculateLogic(symTable); //Returns True or False for an AND Expression
 	}
 

@@ -1,6 +1,6 @@
-package interpreter.symboles;
+package interpreter.symbols;
 
-import interpreter.symboles.SymbolTable.SymbolUnInitializedException;
+import interpreter.symbols.Exceptions.SymbolUnInitializedException;
 
 /**
  * Symbol Interface, will represent variables declared by the code received.<br>
@@ -10,5 +10,6 @@ import interpreter.symboles.SymbolTable.SymbolUnInitializedException;
  */
 public interface Symbol {
 	public void setValue(double val);
-	public double getValue() throws SymbolUnInitializedException;
+	public double getValue() throws Exceptions.SymbolUnInitializedException;
+	public boolean isInitialized();
 }

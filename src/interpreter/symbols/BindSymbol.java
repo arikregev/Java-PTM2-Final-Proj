@@ -1,6 +1,7 @@
-package interpreter.symboles;
+package interpreter.symbols;
 
-import interpreter.symboles.SymbolTable.SymbolUnInitializedException;
+import interpreter.symbols.Exceptions.BindPathNotExistException;
+import interpreter.symbols.Exceptions.SymbolUnInitializedException;
 
 /**
  * Bind Symbol variables represents an active link to the Flight gear Simulator.<br>
@@ -12,23 +13,30 @@ import interpreter.symboles.SymbolTable.SymbolUnInitializedException;
  * @author Amit Koren
  */
 public class BindSymbol implements Symbol {
+	private String name;
 	private String path;
 	private SymbolTable symTable;
 	
-	public BindSymbol(String path, SymbolTable symTable) {
+	private BindSymbol(String name, String path, SymbolTable symTable) {
+		this.name = name;
 		this.path = path;
 		this.symTable = symTable;
 	}
+	
+	public static BindSymbol createInstance(String name, String path, SymbolTable symTable) throws BindPathNotExistException{
+		if (!symTable.simCom.containsVal(path))
+			throw new BindPathNotExistException(name, path);
+		return new BindSymbol(name, path, symTable);
+	}
 	@Override
 	public void setValue(double val) {
-		// TODO Auto-generated method stub
+		this.symTable.simCom.setVal(this.path, val);
 
 	}
 
 	@Override
-	public double getValue() throws SymbolUnInitializedException{
-		// TODO Auto-generated method stub
-		return 0;
+	public double getValue() throws Exceptions.SymbolUnInitializedException{
+		return this.symTable.simCom.getVal(path);
 	}
 	
 	@Override
@@ -41,6 +49,10 @@ public class BindSymbol implements Symbol {
 			return false;
 		BindSymbol other = (BindSymbol) obj;
 		return path.equals(other.path);
+	}
+	@Override
+	public boolean isInitialized() {
+		return true;
 	}
 
 }

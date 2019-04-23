@@ -1,7 +1,7 @@
-package interpreter.symboles;
+package interpreter.symbols;
 
 import interpreter.expression.NumberExpression;
-import interpreter.symboles.SymbolTable.SymbolUnInitializedException;
+import interpreter.symbols.Exceptions.SymbolUnInitializedException;
 
 /**
  * Regular Symbol represents variables that are numeric based like int, double. 
@@ -26,9 +26,9 @@ public class RegularSymbol implements Symbol {
 	}
 
 	@Override
-	public double getValue() throws SymbolUnInitializedException{
+	public double getValue() throws Exceptions.SymbolUnInitializedException{
 		if (this.value == null)
-			throw new SymbolUnInitializedException(symName);
+			throw new Exceptions.SymbolUnInitializedException(symName);
 		return this.value;
 	}
 	
@@ -43,4 +43,9 @@ public class RegularSymbol implements Symbol {
 		RegularSymbol other = (RegularSymbol) obj;
 		return Double.doubleToLongBits(value) == Double.doubleToLongBits(other.value);
 	}
+	@Override
+	public boolean isInitialized() {
+		return true;
+	}
+
 }

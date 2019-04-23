@@ -14,10 +14,10 @@ import interpreter.expression.builders.ExpressionBuilder;
 import interpreter.expression.logic.BooleanExpression;
 import interpreter.expression.logic.comparisonExpressions.*;
 import interpreter.expression.math.*;
-
-import interpreter.symboles.RegularSymbol;
-import interpreter.symboles.SymbolTable;
-import interpreter.symboles.SymbolTable.SymbolException;
+import interpreter.symbols.Exceptions;
+import interpreter.symbols.RegularSymbol;
+import interpreter.symbols.SymbolTable;
+import interpreter.symbols.Exceptions.SymbolException;
 
 class ExpressionBuilderTest {
 
@@ -30,7 +30,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void simpleBinaryExpressionTest() throws ParseException, SymbolException {
+	void simpleBinaryExpressionTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokensPlus = new ArrayList<String>();
 		tokensPlus.add("5");
 		tokensPlus.add("+");
@@ -69,7 +69,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void tooManyOpenParensTest() throws ParseException, SymbolException {
+	void tooManyOpenParensTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokensPlus = new ArrayList<String>();
 		tokensPlus.add("(");
 		tokensPlus.add("5");
@@ -81,7 +81,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void tooManyClosingParensTest() throws ParseException, SymbolException {
+	void tooManyClosingParensTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokensPlus = new ArrayList<String>();
 		tokensPlus.add("(");
 		tokensPlus.add("5");
@@ -95,7 +95,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void plusplusExpressionTest() throws ParseException, SymbolException {
+	void plusplusExpressionTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokensPlus = new ArrayList<String>();
 		tokensPlus.add("5");
 		tokensPlus.add("+");
@@ -120,7 +120,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void mulmulExpressionTest() throws ParseException, SymbolException {
+	void mulmulExpressionTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("5");
 		tokens.add("*");
@@ -145,7 +145,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void plusmulExpressionTest() throws ParseException, SymbolException {
+	void plusmulExpressionTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("5");
 		tokens.add("+");
@@ -170,7 +170,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void mulplusExpressionTest() throws ParseException, SymbolException {
+	void mulplusExpressionTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("5");
 		tokens.add("*");
@@ -195,7 +195,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void mulplusparensExpressionTest() throws ParseException, SymbolException {
+	void mulplusparensExpressionTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("5");
 		tokens.add("*");
@@ -221,7 +221,7 @@ class ExpressionBuilderTest {
 		
 	}
 	@Test
-	void unaryminusExpressionTest() throws ParseException, SymbolException {
+	void unaryminusExpressionTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("-");
 		tokens.add("5");
@@ -238,7 +238,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void unaryminusplusExpressionTest() throws ParseException, SymbolException {
+	void unaryminusplusExpressionTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("-");
 		tokens.add("5");
@@ -259,7 +259,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void plusunaryminusExpressionTest() throws ParseException, SymbolException {
+	void plusunaryminusExpressionTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("5");
 		tokens.add("+");
@@ -279,7 +279,7 @@ class ExpressionBuilderTest {
 		
 	}
 	@Test
-	void plusunaryminusparensExpressionTest() throws ParseException, SymbolException {
+	void plusunaryminusparensExpressionTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("-");
 		tokens.add("(");
@@ -310,13 +310,13 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void assignExpressionTest() throws ParseException, SymbolException {
+	void assignExpressionTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("a");
 		tokens.add("=");
 		tokens.add("4");
 		
-		SymbolTable table = new SymbolTable();
+		SymbolTable table = new SymbolTable(new String[0]);
 		table.addSymbol("a", new RegularSymbol("a"));
 		
 		AssignmentExpression expectedPlus = 
@@ -337,7 +337,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void assignplusExpressionTest() throws ParseException, SymbolException {
+	void assignplusExpressionTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("a");
 		tokens.add("=");
@@ -345,7 +345,7 @@ class ExpressionBuilderTest {
 		tokens.add("+");
 		tokens.add("3");
 		
-		SymbolTable table = new SymbolTable();
+		SymbolTable table = new SymbolTable(new String[0]);
 		table.addSymbol("a", new RegularSymbol("a"));
 		
 		AssignmentExpression expectedPlus = 
@@ -367,7 +367,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void assignassignExpressionTest() throws ParseException, SymbolException {
+	void assignassignExpressionTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("a");
 		tokens.add("=");
@@ -375,7 +375,7 @@ class ExpressionBuilderTest {
 		tokens.add("=");
 		tokens.add("4");
 		
-		SymbolTable table = new SymbolTable();
+		SymbolTable table = new SymbolTable(new String[0]);
 		table.addSymbol("a", new RegularSymbol("a"));
 		table.addSymbol("b", new RegularSymbol("b"));
 		
@@ -400,7 +400,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void SimpleComparisonTest1() throws ParseException, SymbolException {
+	void SimpleComparisonTest1() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("6");
 		tokens.add(">");
@@ -418,7 +418,7 @@ class ExpressionBuilderTest {
 		assertEquals(expected, output);
 	}
 	@Test
-	void BiggerThenComparisonTest2() throws ParseException, SymbolException {
+	void BiggerThenComparisonTest2() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("8");
 		tokens.add(">");
@@ -437,7 +437,7 @@ class ExpressionBuilderTest {
 	}
 
 	@Test
-	void LowerEqualsExpressionTest() throws ParseException, SymbolException {
+	void LowerEqualsExpressionTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("2");
 		tokens.add("<=");
@@ -456,7 +456,7 @@ class ExpressionBuilderTest {
 	}
 
 	@Test
-	void EqualsExpressionTest() throws ParseException, SymbolException {
+	void EqualsExpressionTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("8");
 		tokens.add("==");
@@ -475,7 +475,7 @@ class ExpressionBuilderTest {
 	}
 
 	@Test
-	void BiggerEqualsComparisonTest() throws ParseException, SymbolException {
+	void BiggerEqualsComparisonTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("8");
 		tokens.add(">=");
@@ -494,7 +494,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void SimpleComparisonTest() throws ParseException, SymbolException {
+	void SimpleComparisonTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("8");
 		tokens.add(">=");
@@ -513,7 +513,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void multipleExpressionsTest() throws ParseException, SymbolException {
+	void multipleExpressionsTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("8");
 		tokens.add(">=");
@@ -533,7 +533,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void multipleExpressionsWithParenTest() throws ParseException, SymbolException {
+	void multipleExpressionsWithParenTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("(");
 		tokens.add("6");
@@ -549,7 +549,7 @@ class ExpressionBuilderTest {
 		assertEquals(expected, output);
 	}
 	@Test
-	void multipleExpressionsWithParenBeforeTest() throws ParseException, SymbolException {
+	void multipleExpressionsWithParenBeforeTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("0");
 		tokens.add("(");
@@ -566,7 +566,7 @@ class ExpressionBuilderTest {
 	}
 	
 	@Test
-	void multipleExpressionsInParenTest() throws ParseException, SymbolException {
+	void multipleExpressionsInParenTest() throws ParseException, Exceptions.SymbolException {
 		ArrayList<String> tokens = new ArrayList<String>();
 		tokens.add("(");
 		tokens.add("6");

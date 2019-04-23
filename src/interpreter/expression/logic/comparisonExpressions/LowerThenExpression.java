@@ -2,8 +2,9 @@ package interpreter.expression.logic.comparisonExpressions;
 
 
 import interpreter.expression.math.MathExpression;
-import interpreter.symboles.SymbolTable;
-import interpreter.symboles.SymbolTable.SymbolException;
+import interpreter.symbols.Exceptions;
+import interpreter.symbols.SymbolTable;
+import interpreter.symbols.Exceptions.SymbolException;
 
 public class LowerThenExpression extends ComparisonExpression {
 
@@ -12,7 +13,7 @@ public class LowerThenExpression extends ComparisonExpression {
 	}
 
 	@Override
-	public boolean calculateLogic(SymbolTable symTable) throws SymbolException {
+	public boolean calculateLogic(SymbolTable symTable) throws Exceptions.SymbolException {
 		return left.calculateNumber(symTable) < right.calculateNumber(symTable);
 		
 	}

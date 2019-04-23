@@ -28,7 +28,7 @@ public class MainTrain {
 		if(MyInterpreter.interpret(test2)!=rand+3)
 			System.out.println("failed test2 (-20)");
 
-/*		String[] test3={
+		String[] test3={
 				"connect 127.0.0.1 "+port,
 				"var x",
 				"x = bind simX",
@@ -55,7 +55,7 @@ public class MainTrain {
 		if(MyInterpreter.interpret(test4)!=sim.simX+sim.simY*sim.simZ)
 			System.out.println("failed test4 (-20)");
 	
-		*/			
+				
 		String[] test5={
 				"var x = 0",
 				"var y = " + rand,

@@ -4,11 +4,13 @@ import java.util.List;
 
 import interpreter.Interpreter.ParseException;
 import interpreter.commands.Command;
+import interpreter.commands.ExecutionException;
 import interpreter.commands.factory.CommandFactory;
 import interpreter.expression.builders.ExpressionBuilder;
 import interpreter.expression.math.MathExpression;
-import interpreter.symboles.SymbolTable;
-import interpreter.symboles.SymbolTable.SymbolException;
+import interpreter.symbols.Exceptions;
+import interpreter.symbols.SymbolTable;
+import interpreter.symbols.Exceptions.SymbolException;
 /**
  * The Print command allows you to print to the screen Strings and MathExpressions.
  * @author Arik Regev
@@ -22,7 +24,7 @@ public class PrintCommand implements Command {
 	 *
 	 */
 	private static interface Printable{
-		public void printMe(SymbolTable symTable) throws SymbolException;
+		public void printMe(SymbolTable symTable) throws Exceptions.SymbolException;
 	}
 	private Printable value;
 	
@@ -33,14 +35,14 @@ public class PrintCommand implements Command {
 		this.value = (SymbolTable symTable)->{System.out.println(exp.calculateNumber(symTable));}; // same here
 	}
 	@Override
-	public boolean execute(SymbolTable symTable) throws SymbolException {
+	public boolean execute(SymbolTable symTable) throws ExecutionException {
 		value.printMe(symTable);
 		return true;
 	}
 	public static class Factory extends CommandFactory{
 
 		@Override
-		public Command create(List<String> tokens) throws ParseException, SymbolException {
+		public Command create(List<String> tokens) throws ParseException {
 			if (tokens.isEmpty())
 				throw new ParseException("Expression must not be empty");
 			String s = tokens.get(0);

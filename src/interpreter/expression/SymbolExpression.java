@@ -2,10 +2,11 @@ package interpreter.expression;
 
 import interpreter.expression.logic.BooleanExpression;
 import interpreter.expression.math.MathExpression;
-import interpreter.symboles.Symbol;
-import interpreter.symboles.SymbolTable;
-import interpreter.symboles.SymbolTable.SymbolException;
-import interpreter.symboles.SymbolTable.SymbolNotExistException;
+import interpreter.symbols.Exceptions;
+import interpreter.symbols.Symbol;
+import interpreter.symbols.SymbolTable;
+import interpreter.symbols.Exceptions.SymbolException;
+import interpreter.symbols.Exceptions.SymbolNotExistException;
 
 public class SymbolExpression implements MathExpression, BooleanExpression {
 	String symbol;
@@ -14,14 +15,14 @@ public class SymbolExpression implements MathExpression, BooleanExpression {
 		this.symbol = symbol;
 	}
 	@Override
-	public double calculateNumber(SymbolTable symTable) throws SymbolNotExistException, SymbolException {
+	public double calculateNumber(SymbolTable symTable) throws Exceptions.SymbolException {
 		return getSym(symTable).getValue();
 	}
 	@Override
-	public boolean calculateLogic(SymbolTable symTable) throws SymbolNotExistException, SymbolException {
+	public boolean calculateLogic(SymbolTable symTable) throws Exceptions.SymbolException {
 		return getSym(symTable).getValue()!=0;
 	}
-	public Symbol getSym(SymbolTable symTable) throws SymbolNotExistException {
+	public Symbol getSym(SymbolTable symTable) throws Exceptions.SymbolNotExistException {
 		return symTable.getSymbol(symbol);
 	}
 	@Override

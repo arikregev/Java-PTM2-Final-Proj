@@ -1,7 +1,8 @@
 package interpreter.expression.logic;
 
-import interpreter.symboles.SymbolTable;
-import interpreter.symboles.SymbolTable.SymbolException;
+import interpreter.symbols.Exceptions;
+import interpreter.symbols.SymbolTable;
+import interpreter.symbols.Exceptions.SymbolException;
 
 public class OrExpression extends LogicExpression {
 	/**
@@ -20,7 +21,7 @@ public class OrExpression extends LogicExpression {
 	 * Returns True or False for the OR Expression 
 	 */
 	@Override
-	public boolean calculateLogic(SymbolTable symTable) throws SymbolException {
+	public boolean calculateLogic(SymbolTable symTable) throws Exceptions.SymbolException {
 		// TODO Auto-generated method stub
 		return this.left.calculateLogic(symTable) || this.right.calculateLogic(symTable);
 	}

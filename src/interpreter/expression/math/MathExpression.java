@@ -1,9 +1,10 @@
 package interpreter.expression.math;
 
-import interpreter.symboles.SymbolTable;
-import interpreter.symboles.SymbolTable.SymbolException;
-import interpreter.symboles.SymbolTable.SymbolNotExistException;
+import interpreter.symbols.Exceptions;
+import interpreter.symbols.SymbolTable;
+import interpreter.symbols.Exceptions.SymbolException;
+import interpreter.symbols.Exceptions.SymbolNotExistException;
 
 public interface MathExpression {
-	public double calculateNumber(SymbolTable symTable) throws SymbolException;
+	public double calculateNumber(SymbolTable symTable) throws Exceptions.SymbolException;
 }

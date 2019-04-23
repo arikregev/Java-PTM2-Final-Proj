@@ -1,7 +1,8 @@
 package interpreter.expression.math;
 
-import interpreter.symboles.SymbolTable;
-import interpreter.symboles.SymbolTable.SymbolException;
+import interpreter.symbols.Exceptions;
+import interpreter.symbols.SymbolTable;
+import interpreter.symbols.Exceptions.SymbolException;
 
 public class UnaryMinusExpression implements MathExpression {
 	private MathExpression exp;
@@ -11,7 +12,7 @@ public class UnaryMinusExpression implements MathExpression {
 	}
 
 	@Override
-	public double calculateNumber(SymbolTable symTable) throws SymbolException {
+	public double calculateNumber(SymbolTable symTable) throws Exceptions.SymbolException {
 		return -(this.exp.calculateNumber(symTable));
 	}
 	@Override

@@ -5,11 +5,12 @@ import java.util.List;
 
 import interpreter.Interpreter.ParseException;
 import interpreter.commands.Command;
+import interpreter.commands.ExecutionException;
 import interpreter.commands.factory.CommandFactory;
 import interpreter.expression.builders.ExpressionBuilder;
 import interpreter.expression.logic.BooleanExpression;
-import interpreter.symboles.SymbolTable;
-import interpreter.symboles.SymbolTable.SymbolException;
+import interpreter.symbols.SymbolTable;
+import interpreter.symbols.Exceptions.SymbolException;
 /**
  * Defining how our IF Command will behave 
  * 
@@ -23,7 +24,7 @@ public class IfCommand extends ControlCommand{
 		this.exp = exp;
 	}
 	@Override
-	public boolean execute(SymbolTable symTable) throws SymbolException {
+	public boolean execute(SymbolTable symTable) throws ExecutionException {
 		if(exp.calculateLogic(symTable)) { 
 			return innerCommand.execute(symTable);
 		}
@@ -31,7 +32,7 @@ public class IfCommand extends ControlCommand{
 	}
 	public static class Factory extends CommandFactory{
 		@Override
-		public Command create(List<String> tokens) throws ParseException, SymbolException {
+		public Command create(List<String> tokens) throws ParseException {
 			BooleanExpression booleanExp = new ExpressionBuilder().createBooleanExpression(tokens);
 			if (!tokens.isEmpty())
 				throw new ParseException("Invalid expression at: " + tokens.get(0));
