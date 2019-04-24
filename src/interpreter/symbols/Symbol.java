@@ -1,7 +1,5 @@
 package interpreter.symbols;
 
-import interpreter.symbols.Exceptions.SymbolUnInitializedException;
-
 /**
  * Symbol Interface, will represent variables declared by the code received.<br>
  * Every Symbol created will be inserted into the Symbol table for control.

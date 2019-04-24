@@ -10,7 +10,6 @@ import interpreter.expression.builders.ExpressionBuilder;
 import interpreter.expression.math.MathExpression;
 import interpreter.symbols.Exceptions;
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
 /**
  * The Print command allows you to print to the screen Strings and MathExpressions.
  * @author Arik Regev

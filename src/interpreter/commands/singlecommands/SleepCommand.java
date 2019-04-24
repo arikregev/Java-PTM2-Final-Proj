@@ -10,7 +10,6 @@ import interpreter.commands.factory.CommandFactory;
 import interpreter.expression.builders.ExpressionBuilder;
 import interpreter.expression.math.MathExpression;
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
 /**
  * Sleep Command lets you delay the code from being for a period of desired time.<br>
  * The command receives the value in Milliseconds. 

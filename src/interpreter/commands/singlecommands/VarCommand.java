@@ -11,10 +11,7 @@ import interpreter.expression.math.MathExpression;
 import interpreter.symbols.BindSymbol;
 import interpreter.symbols.Exceptions;
 import interpreter.symbols.RegularSymbol;
-import interpreter.symbols.Symbol;
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolAlreadyExistException;
-import interpreter.symbols.Exceptions.SymbolException;
 /**
  * Every Var Command represents a link to a parameter in the aircraft.<br>
  * TODO ...

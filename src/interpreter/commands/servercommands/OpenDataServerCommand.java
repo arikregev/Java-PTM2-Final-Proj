@@ -11,21 +11,23 @@ import interpreter.commands.factory.CommandFactory;
 import interpreter.expression.builders.ExpressionBuilder;
 import interpreter.expression.math.MathExpression;
 import interpreter.symbols.SymbolTable;
-
+/**
+ * The purpose of this class is to open a listening port that the simulator<br>
+ * can connect to.<br>
+ * Through that connection the simulator pushes data to the program that contains Information about current status of the AirCraft. 
+ * @param MathExpression port
+ * @param MathExpression rate
+ * @author Arik Regev
+ * @author Amit Koren
+ *
+ */
 public class OpenDataServerCommand implements Command {
 	private MathExpression port;
 	private MathExpression rate;
-//	private volatile boolean stop;
-//	private ServerSocket recvSocket;
-//	private Socket clientSocket;
-//	private BufferedReader br;
-//	private HashMap<String, Symbol> symPtr;
 
 	public OpenDataServerCommand(MathExpression port, MathExpression rate) {
 		this.port = port;
 		this.rate = rate;
-//		this.stop = false;
-//		this.symPtr = new HashMap<>();
 	}
 
 	@Override
@@ -37,51 +39,6 @@ public class OpenDataServerCommand implements Command {
 			throw new IOExceptionWrapper(e);
 		}
 		return true;
-		
-		/*int actualPort = (int)port.calculateNumber(symTable);
-		Thread t1 = new Thread(() -> {
-			try {
-				this.recvSocket = new ServerSocket(actualPort);
-				this.clientSocket = recvSocket.accept();
-				this.br = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
-				String line = br.readLine();
-				while(!stop) {
-					if(line != null) {
-						String[] parsed = line.split(",");
-						
-						
-					}
-					Thread.sleep(100);
-				}
-			} catch (IOException e) {
-				try {
-					if (this.br != null)
-						this.br.close();
-					if (this.clientSocket != null)
-						this.clientSocket.close();
-					if (this.recvSocket != null)
-						this.recvSocket.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			try {
-				String lineFromSim = br.readLine();
-				while(lineFromSim != null) {
-					
-					lineFromSim = br.readLine();
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		});
-		t1.start();*/
 	}
 
 

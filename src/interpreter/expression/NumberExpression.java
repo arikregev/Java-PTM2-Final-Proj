@@ -4,7 +4,6 @@ import interpreter.expression.logic.BooleanExpression;
 import interpreter.expression.math.MathExpression;
 import interpreter.symbols.Exceptions;
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
 
 public class NumberExpression implements MathExpression, BooleanExpression{
 	private double value;

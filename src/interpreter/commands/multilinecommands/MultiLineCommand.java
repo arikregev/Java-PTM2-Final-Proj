@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import interpreter.commands.Command;
 import interpreter.commands.ExecutionException;
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
 /**
  * The Abstract Command Class is being inherited by two  
  * Commands that can hold single commands in them:<br>

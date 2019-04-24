@@ -9,13 +9,12 @@ import interpreter.commands.factory.CommandFactory;
 import interpreter.expression.builders.ExpressionBuilder;
 import interpreter.expression.logic.BooleanExpression;
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
 
 /**
- * Defining how our LOOP Command will behave 
+ * Defining how our While Command will behave 
  * 
  * @author Arik Regev
- * 
+ * @author Amit Koren
  */
 public class WhileCommand extends ControlCommand{
 	

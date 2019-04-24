@@ -10,11 +10,11 @@ import interpreter.commands.factory.CommandFactory;
 import interpreter.expression.builders.ExpressionBuilder;
 import interpreter.expression.logic.BooleanExpression;
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
 /**
  * Defining how our IF Command will behave 
  * 
  * @author Arik Regev
+ * @author Amit Koren
  *
  */
 public class IfCommand extends ControlCommand{

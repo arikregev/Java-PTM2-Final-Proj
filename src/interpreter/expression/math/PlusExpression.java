@@ -2,7 +2,6 @@ package interpreter.expression.math;
 
 import interpreter.symbols.Exceptions;
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
 
 public class PlusExpression extends BinaryExpression {
 

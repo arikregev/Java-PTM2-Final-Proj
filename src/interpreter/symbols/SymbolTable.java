@@ -45,6 +45,15 @@ public class SymbolTable {
 				public double getValue() throws SymbolUnInitializedException {
 					throw new SymbolUnInitializedException(s);
 				}
+				/**
+				 * The method gives the ability in runtime to know if the variable is initialized or not.
+				 * <br>Inside this class the method will always return false because if we encountered the method here the variable is not initialized.
+				 * <br>Example for an uninitialized variable:
+				 * <pre>var x</pre>
+				 * <br>Example for an initialized variable:
+				 * <pre>var x = 5</pre>
+				 * <pre>var y = bind /path</pre>
+				 */
 				@Override
 				public boolean isInitialized() {
 					return false;

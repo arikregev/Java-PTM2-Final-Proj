@@ -13,7 +13,8 @@ import interpreter.symbols.SymbolTable;
 
 /**
  * The Command was created in the purpose of having the ability to connect to
- * the FlightGear Server
+ * the FlightGear Server and send commands to it.
+ * The command is initiating the Connect method on the SimCom Class.
  * 
  * @author Arik Regev
  * @author Amit Koren
@@ -42,14 +43,6 @@ public class ConnectCommand implements Command {
 			throw new IOExceptionWrapper(e);
 		}
 		return true;
-//		try {
-//			this.conSock = new Socket(ipAddr, (int) port.calculateNumber(symTable));
-//			this.out = new PrintWriter(conSock.getOutputStream(), true);
-//			return true;
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return false;
 	}
 
 	public static class Factory extends CommandFactory {

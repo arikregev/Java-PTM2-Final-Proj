@@ -1,7 +1,6 @@
 package interpreter.symbols;
 
 import interpreter.symbols.Exceptions.BindPathNotExistException;
-import interpreter.symbols.Exceptions.SymbolUnInitializedException;
 
 /**
  * Bind Symbol variables represents an active link to the Flight gear Simulator.<br>
@@ -13,6 +12,7 @@ import interpreter.symbols.Exceptions.SymbolUnInitializedException;
  * @author Amit Koren
  */
 public class BindSymbol implements Symbol {
+	@SuppressWarnings("unused")
 	private String name;
 	private String path;
 	private SymbolTable symTable;
@@ -50,6 +50,15 @@ public class BindSymbol implements Symbol {
 		BindSymbol other = (BindSymbol) obj;
 		return path.equals(other.path);
 	}
+	/**
+	 * The method gives the ability in runtime to know if the variable is initialized or not.
+	 * <br>Inside this class the method will always return true.
+	 * <br>Example for an uninitialized variable:
+	 * <pre>var x</pre>
+	 * <br>Example for an initialized variable:
+	 * <pre>var x = 5</pre>
+	 * <pre>var y = bind /path</pre>
+	 */
 	@Override
 	public boolean isInitialized() {
 		return true;

@@ -16,7 +16,6 @@ import interpreter.commands.servercommands.*;
 import interpreter.commands.singlecommands.*;
 import interpreter.symbols.Exceptions;
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
 
 public abstract class Interpreter {
 	@SuppressWarnings("serial")

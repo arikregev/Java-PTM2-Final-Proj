@@ -1,7 +1,6 @@
 package interpreter.commands;
 
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
 /**
  * This interface is being Inherited by every Command
  * that will be able to use in our newly invented Language.

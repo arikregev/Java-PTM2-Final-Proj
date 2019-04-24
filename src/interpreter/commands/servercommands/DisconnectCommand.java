@@ -7,11 +7,11 @@ import interpreter.commands.Command;
 import interpreter.commands.ExecutionException;
 import interpreter.commands.factory.CommandFactory;
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
 
 /**
- * The Command was created in the purpose of having the ability to connect to
- * the FlightGear Server
+ * The Command was created in the purpose of having the ability to Disconnect 
+ * the Telnet connection to the FlightGear Server and terminate our OpenDataServer
+ * Using SimCom.
  * 
  * @author Arik Regev
  * @author Amit Koren

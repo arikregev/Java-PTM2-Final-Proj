@@ -3,7 +3,6 @@ package interpreter.expression.logic.comparisonExpressions;
 import interpreter.expression.math.MathExpression;
 import interpreter.symbols.Exceptions;
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
 
 public class EqualsExpression extends ComparisonExpression {
 

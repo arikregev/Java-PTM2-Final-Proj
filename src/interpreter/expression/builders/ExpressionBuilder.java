@@ -9,8 +9,6 @@ import interpreter.expression.*;
 import interpreter.expression.logic.*;
 import interpreter.expression.logic.comparisonExpressions.*;
 import interpreter.expression.math.*;
-import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
 
 public class ExpressionBuilder {
 	

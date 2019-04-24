@@ -3,7 +3,6 @@ package interpreter.expression.math;
 import interpreter.expression.SymbolExpression;
 import interpreter.symbols.Exceptions;
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
 
 public class AssignmentExpression implements MathExpression {
 	private SymbolExpression left;

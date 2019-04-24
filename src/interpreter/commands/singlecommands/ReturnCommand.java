@@ -9,7 +9,6 @@ import interpreter.commands.factory.CommandFactory;
 import interpreter.expression.builders.ExpressionBuilder;
 import interpreter.expression.math.MathExpression;
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
 
 public class ReturnCommand implements Command{
 	

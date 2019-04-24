@@ -5,8 +5,6 @@ import interpreter.expression.math.MathExpression;
 import interpreter.symbols.Exceptions;
 import interpreter.symbols.Symbol;
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
-import interpreter.symbols.Exceptions.SymbolNotExistException;
 
 public class SymbolExpression implements MathExpression, BooleanExpression {
 	String symbol;

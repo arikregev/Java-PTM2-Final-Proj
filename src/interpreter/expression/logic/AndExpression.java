@@ -2,7 +2,6 @@ package interpreter.expression.logic;
 
 import interpreter.symbols.Exceptions;
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
 
 /**
  * The purpose of this class to resolve an answer to the AND Expression in out new Language

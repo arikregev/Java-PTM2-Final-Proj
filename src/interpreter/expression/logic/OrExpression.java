@@ -2,19 +2,16 @@ package interpreter.expression.logic;
 
 import interpreter.symbols.Exceptions;
 import interpreter.symbols.SymbolTable;
-import interpreter.symbols.Exceptions.SymbolException;
-
+/**
+ * Class that resolves an answer to the OR Expression in our new Language
+ * @param left
+ * @param right
+ * @author Arik Regev
+ * @author Amit Koren
+ */
 public class OrExpression extends LogicExpression {
-	/**
-	 * Class to resolve an answer to the OR Expression in out new Language
-	 * @param left
-	 * @param right
-	 * @author Arik Regev
-	 * @author Amit Koren
-	 */
 	public OrExpression(BooleanExpression left, BooleanExpression right) {
 		super(left, right);
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**
@@ -22,7 +19,6 @@ public class OrExpression extends LogicExpression {
 	 */
 	@Override
 	public boolean calculateLogic(SymbolTable symTable) throws Exceptions.SymbolException {
-		// TODO Auto-generated method stub
 		return this.left.calculateLogic(symTable) || this.right.calculateLogic(symTable);
 	}
 

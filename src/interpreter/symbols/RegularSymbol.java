@@ -1,7 +1,5 @@
 package interpreter.symbols;
 
-import interpreter.expression.NumberExpression;
-import interpreter.symbols.Exceptions.SymbolUnInitializedException;
 
 /**
  * Regular Symbol represents variables that are numeric based like int, double. 
@@ -43,6 +41,15 @@ public class RegularSymbol implements Symbol {
 		RegularSymbol other = (RegularSymbol) obj;
 		return Double.doubleToLongBits(value) == Double.doubleToLongBits(other.value);
 	}
+	/**
+	 * The method gives the ability in runtime to know if the variable is initialized or not.
+	 * <br>Inside this class the method will always return true.
+	 * <br>Example for an uninitialized variable:
+	 * <pre>var x</pre>
+	 * <br>Example for an initialized variable:
+	 * <pre>var x = 5</pre>
+	 * <pre>var y = bind /path</pre>
+	 */
 	@Override
 	public boolean isInitialized() {
 		return true;
