@@ -68,7 +68,7 @@ public class ExpressionBuilder {
 				break;
 				
 			case "-":
-				if(prevToken == null || prevToken.matches("(\\-|\\+|\\*|\\/|=\\()")) {
+				if(prevToken == null || prevToken.matches("(\\-|\\+|\\*|\\/|=|\\()")) {
 					stack.push("~");  
 					break;
 				}

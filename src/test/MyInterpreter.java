@@ -28,7 +28,8 @@ public class MyInterpreter {
 				"/controls/engines/engine/throttle",
 				"/engines/engine/rpm"
 				};
-		Interpreter ipter = new Interpreter(paths) {
+		String[] paths2 = {"simX", "simY", "simZ"};
+		Interpreter ipter = new Interpreter(paths2) {
 			int i = 0;
 			@Override
 			public String getLine() throws EOFException {

@@ -36,13 +36,14 @@ public class SimulatorCom {
 			try {
 				String line = getLineFromServer();
 				while(line != null) {
+					System.out.println(line);
 					String[] vals = line.split(",");
 					if(vals.length == this.paths.length) {
 						for(int i = 0; i < vals.length; i++) {
 							this.varMap.put(this.paths[i], Double.parseDouble(vals[i]));
 						}
 					}
-					Thread.sleep((long)(1000/freq));
+					Thread.sleep((long)(50));//(long)(1000/freq)
 					line = getLineFromServer();
 				}
 			} catch(IOException | InterruptedException e) {

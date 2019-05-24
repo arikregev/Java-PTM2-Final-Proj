@@ -67,7 +67,10 @@ public class VarCommand implements Command {
 			if (tokens.get(2).equals("bind")) {
 				if (tokens.size() > 4)
 					throw new ParseException("Var (bind) expression too long");
-				return new VarCommand(symName, tokens.get(3));
+				String bindValue = tokens.get(3);
+				if (bindValue.startsWith("\"") && bindValue.endsWith("\""))
+					bindValue = bindValue.substring(1, bindValue.length()-1);
+				return new VarCommand(symName, bindValue);
 			}
 			MathExpression exp = new ExpressionBuilder().createMathExpression(tokens);
 			if (!tokens.isEmpty())
