@@ -40,7 +40,8 @@ public class VarCommand implements Command {
 	public VarCommand(String symName, MathExpression exp) {
 		this.s = (symTable)->{
 			symTable.addSymbol(symName, new RegularSymbol(symName));
-			exp.calculateNumber(symTable);
+			//exp.calculateNumber(symTable);
+			symTable.getSymbol(symName).setValue(exp.calculateNumber(symTable));
 		};
 	}
 		

@@ -20,6 +20,7 @@ public class SimulatorCom {
 	private PrintWriter pw = null;
 	private final int NULL_BUFFER_SIZE = 1024;
 	private byte[] nullBytes = new byte[NULL_BUFFER_SIZE]; 
+	
 
 	
 	public SimulatorCom(String[] paths) {
@@ -36,15 +37,16 @@ public class SimulatorCom {
 			try {
 				String line = getLineFromServer();
 				while(line != null) {
-					System.out.println(line);
+					//System.out.println(line);
 					String[] vals = line.split(",");
 					if(vals.length == this.paths.length) {
 						for(int i = 0; i < vals.length; i++) {
 							this.varMap.put(this.paths[i], Double.parseDouble(vals[i]));
 						}
 					}
-					Thread.sleep((long)(50));//(long)(1000/freq)
+					Thread.sleep((long)(1000/freq));//(long)()
 					line = getLineFromServer();
+					
 				}
 			} catch(IOException | InterruptedException e) {
 				

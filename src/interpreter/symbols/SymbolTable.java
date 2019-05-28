@@ -21,6 +21,7 @@ public class SymbolTable {
 	public SymbolTable(String[] simPaths) {
 		symTable = new HashMap<String, Symbol>();
 		this.simCom = new SimulatorCom(simPaths);
+
 	}
 	public Symbol getSymbol(String s) throws Exceptions.SymbolNotExistException {
 		if(!symTable.containsKey(s)) throw new Exceptions.SymbolNotExistException(s);

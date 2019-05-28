@@ -48,9 +48,6 @@ public abstract class Interpreter {
 		commandMap.put("disconnect", new DisconnectCommand.Factory());
 	}
 	
-	public Interpreter(HashMap<String,CommandFactory> f) {
-		//TODO - receive the commands from OutsideSource
-	}
 	public abstract String getLine() throws EOFException;
 	
 	public void run(){

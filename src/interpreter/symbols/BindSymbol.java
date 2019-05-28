@@ -36,6 +36,7 @@ public class BindSymbol implements Symbol {
 
 	@Override
 	public double getValue() throws Exceptions.SymbolUnInitializedException{
+		//Testing 
 		return this.symTable.simCom.getVal(path);
 	}
 	
